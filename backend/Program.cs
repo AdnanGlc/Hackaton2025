@@ -7,7 +7,6 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddDbContext<ApplicationDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
@@ -20,6 +19,25 @@ builder.Services.AddIdentity<User, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddApiEndpoints();
 
+// Configure application cookie options
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true; // Kolačić je dostupan samo putem HTTP zahtjeva
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None; // Omogućava korištenje kolačića na HTTP
+    options.Cookie.SameSite = SameSiteMode.Strict; // Omogućava korištenje kolačića u različitim domenama (ako je potrebno)
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Trajanje kolačića
+    options.SlidingExpiration = true; // Omogućava produžavanje trajanja kolačića s aktivnim zahtjevima
+});
+
+// CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        builder => builder.WithOrigins("http://localhost:5173")  // Allow React app running on this port
+                          .AllowCredentials()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -34,10 +52,13 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-app.UseAuthorization(); 
+app.UseAuthorization();
+// Apply CORS before Authorization middleware
+app.UseCors("AllowLocalhost");  // Apply CORS policy
+
+app.UseAuthorization();
 
 app.MapControllers();
 app.MapIdentityApi<User>();
-
 
 app.Run();

@@ -88,7 +88,7 @@ const Home = () => {
                         {categories.map((category) => (
                             <button
                                 key={category.id}
-                                className="flex-shrink-0 flex p-3 gap-2 items-center rounded-full bg-gray-200 text-gray-700 font-medium shadow-lg w-40 justify-center"
+                                className="flex-shrink-0 flex p-3 gap-2 items-center rounded-full bg-gray-200 text-gray-700 font-medium shadow-lg justify-center"
                             >
                                 <img className="object-contain w-12" src={category.image} alt={category.name} />
                                 <p>{category.name}</p>

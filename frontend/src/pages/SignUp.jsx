@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
@@ -7,6 +7,53 @@ import circles from '../assets/circles2.png'
 import TextLink from "../components/TextLink";
 
 function LoginForm() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [rePassword, setRePassword] = useState("");
+    const [error, setError] = useState("");  // To display error message
+    const [isLoading, setIsLoading] = useState(false); // Loading state for button
+
+    // Handle input changes
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleRePasswordChange = (e) => setRePassword(e.target.value);
+
+    // Handle form submission
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+
+        if (password !== rePassword) {
+            setError("Passwords do not match!");
+            return;
+        }
+
+        setIsLoading(true);
+        setError("");
+
+        try {
+            const response = await fetch("https://localhost:7213/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Handle success (e.g., redirect to login or show success message)
+                console.log("Sign up successful:", data);
+            } else {
+                setError(data.message || "An error occurred during sign up.");
+            }
+        } catch (err) {
+            setError("Network error. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="flex overflow-hidden flex-col mx-auto w-full bg-gray-900 max-w-[480px] h-screen">
             <div className="flex w-full items-center">
@@ -18,12 +65,30 @@ function LoginForm() {
                     </div>
                 </div>
             </div>
-            <form className="flex flex-col px-6 pt-6 pb-28 mt-[-150px] w-full bg-white h-full">
-                <InputField label="Name" type="text" placeholder="Your Name" />
-                <InputField label="Email" type="email" placeholder="example@gmail.com" />
-                <InputField label="Password" type="password" placeholder="**********" />
-                <InputField label="Re-Type Password" type="password" placeholder="**********" />
-                <Button text="Sign Up" />
+            <form className="flex flex-col px-6 pt-6 pb-28 mt-[-150px] w-full bg-white h-full" onSubmit={handleSignUp}>
+                <InputField
+                    label="Email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    value={email}
+                    onChange={handleEmailChange}
+                />
+                <InputField
+                    label="Password"
+                    type="password"
+                    placeholder="**********"
+                    value={password}
+                    onChange={handlePasswordChange}
+                />
+                <InputField
+                    label="Re-Type Password"
+                    type="password"
+                    placeholder="**********"
+                    value={rePassword}
+                    onChange={handleRePasswordChange}
+                />
+                {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+                <Button text={isLoading ? "Signing Up..." : "Sign Up"} disabled={isLoading} />
             </form>
         </div>
     );
