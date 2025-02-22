@@ -2,11 +2,12 @@ using backend.Helpers.API;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Endpoints.DataSeed
 {
     public class DataSeedEndpoint(ApplicationDb db) : EndpointBaseAsync
-        .WithoutRequest
+        .WithRequest
         .WithoutResult
     {
         [HttpPost]
@@ -83,7 +84,7 @@ namespace backend.Endpoints.DataSeed
             {
                 Name = "Oatmeal with Apple and Banana",
                 Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
-                UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
+                UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
                 Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
 
             };

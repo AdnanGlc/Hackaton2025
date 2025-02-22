@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Endpoints.UserEndpoints
 {
     public class GetUserData(ApplicationDb db, IHttpContextAccessor _httpContext, UserManager<User> userManager) : EndpointBaseAsync
-        .WithoutRequest
+        .WithRequest
         .WithActionResult<User>
     {
         [HttpGet]

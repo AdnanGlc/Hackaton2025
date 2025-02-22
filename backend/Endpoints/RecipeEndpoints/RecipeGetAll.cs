@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace backend.Endpoints.RecipeEndpoints
 {
     public class RecipeGetAll(ApplicationDb db) : EndpointBaseAsync
-        .WithoutRequest
+        .WithRequest
         .WithResult<RecipeAllResponse[]>
     {
         [HttpGet]
