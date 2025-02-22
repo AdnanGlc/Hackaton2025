@@ -12,8 +12,8 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDb))]
-    [Migration("20250222120144_total")]
-    partial class total
+    [Migration("20250222130921_SELAM")]
+    partial class SELAM
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -339,17 +339,15 @@ namespace backend.Migrations
                     b.Property<double>("QuantityKg")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProiductId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserProducts", "identity");
                 });
@@ -445,7 +443,9 @@ namespace backend.Migrations
 
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("UserProducts")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Proiduct");
 
