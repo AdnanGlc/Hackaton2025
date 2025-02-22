@@ -18,6 +18,7 @@ public partial class Product
     public int Points { get; set; }
 
     public double QuantityKg { get; set; }
+    public string? CountryFlag { get; set; }
 
     public virtual ICollection<RecipeProduct> RecipeProducts { get; set; } = new List<RecipeProduct>();
 
