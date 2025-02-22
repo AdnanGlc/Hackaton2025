@@ -46,7 +46,7 @@ namespace backend.Endpoints.UserEndpoints
     }
     public class UserAddPointsRequst
     {
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public List<ProductAddRequest> Receipt { get; set; }
     }
 }

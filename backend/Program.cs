@@ -1,4 +1,4 @@
-using backend.Extensions;
+﻿using backend.Extensions;
 using backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDb>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,7 +19,6 @@ builder.Services.AddIdentity<User, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddApiEndpoints();
 
-// Configure application cookie options
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true; // Kolačić je dostupan samo putem HTTP zahtjeva
@@ -28,6 +27,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Trajanje kolačića
     options.SlidingExpiration = true; // Omogućava produžavanje trajanja kolačića s aktivnim zahtjevima
 });
+
 
 // CORS configuration
 builder.Services.AddCors(options =>
@@ -38,6 +38,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyMethod()
                           .AllowAnyHeader());
 });
+
 
 var app = builder.Build();
 
@@ -59,6 +60,5 @@ app.UseCors("AllowLocalhost");  // Apply CORS policy
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapIdentityApi<User>();
 
 app.Run();

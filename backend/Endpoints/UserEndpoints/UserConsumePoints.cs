@@ -17,9 +17,11 @@ namespace backend.Endpoints.UserEndpoints
             if (user == null) throw new Exception("No user with requset id");
             var totalCo2 = 0.0f;
             var totalPoints = 0;
+            var totalPrice = 0.0f;
             foreach (ProductConsumeRequest product in request.Receipt){
                 totalCo2 += product.Co2PerKg * product.QuantityKg;
                 totalPoints += Convert.ToInt32(product.Points * product.QuantityKg);
+                totalPrice += product.Price;
                 var userProduct = await db.UserProducts.FirstOrDefaultAsync(up => up.ProiductId == product.ProductId && up.UserId == request.UserID, cancellationToken);
                 if (userProduct != null)
                     userProduct.QuantityKg += product.QuantityKg;
@@ -32,10 +34,14 @@ namespace backend.Endpoints.UserEndpoints
             await db.SaveChangesAsync();
 
             var points = user.Points;
-            user.Points = 0;
+            user.Points = (int)Math.Max(user.Points * 0.01 - totalPrice, 0);
             user.Co2Total += totalCo2;
             user.Co2ThisMonth += totalCo2;
+
+            totalPoints += request.Receipt.Count() * 2;
             user.Points += totalPoints;
+
+
             return totalPoints;
         }
     }
@@ -45,10 +51,11 @@ namespace backend.Endpoints.UserEndpoints
         public int Points { get; set; }
         public float Co2PerKg { get; set; }
         public float QuantityKg { get; set; }
+        public float Price { get; set; }
     }
     public class UserConsumePointsRequst
     {
-        public int UserID { get;set; }
+        public string UserID { get;set; }
         public List<ProductConsumeRequest> Receipt { get; set; }
     }
 }

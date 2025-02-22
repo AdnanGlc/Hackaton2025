@@ -7,18 +7,18 @@ using System.Reflection.Metadata.Ecma335;
 namespace backend.Endpoints.UserEndpoints
 {
     public class UserGetProducts(ApplicationDb db) : EndpointBaseAsync
-        .WithRequest<int>
+        .WithRequest<string>
         .WithResult<UserProductResponse[]>
     {
         [HttpGet]
-        public override async Task<UserProductResponse[]> HandleAsync(int request, CancellationToken cancellationToken = default)
+        public override async Task<UserProductResponse[]> HandleAsync(string request, CancellationToken cancellationToken = default)
         {
             return await db.UserProducts
                 .Where(up=> up.UserId == request)
                 .Include(up => up.Proiduct)
                 .Select(up => new UserProductResponse
                 {
-                    ProductId = request,
+                    ProductId = up.ProiductId,
                     Co2PerKg = up.Proiduct.Co2PerKg,
                     QuantityKg = up.QuantityKg,
                     Name = up.Proiduct.Name
