@@ -1,5 +1,6 @@
 ﻿using backend.Helpers.API;
 using backend.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -9,6 +10,7 @@ namespace backend.Endpoints.UserEndpoints
         .WithRequest<string>
         .WithResult<string[]>
     {
+        [HttpGet]
         public override async Task<string[]> HandleAsync(string request, CancellationToken cancellationToken = default)
         {
             var user = await db.Users.FirstOrDefaultAsync(u => u.Id == request);
