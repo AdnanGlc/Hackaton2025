@@ -2,6 +2,7 @@
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace backend.Endpoints.UserEndpoints
 {
@@ -30,11 +31,12 @@ namespace backend.Endpoints.UserEndpoints
                     db.UserProducts.Add(userProduct);
                 }
             }
-            await db.SaveChangesAsync();
+            
 
             user.Co2Total += totalCo2;
             user.Co2ThisMonth += totalCo2;
             user.Points += totalPoints;
+            await db.SaveChangesAsync();
             return totalPoints;
         }
     }
@@ -44,6 +46,8 @@ namespace backend.Endpoints.UserEndpoints
         public int Points { get; set; }
         public float Co2PerKg { get; set; }
         public float QuantityKg { get; set; }
+
+
     }
     public class UserAddPointsRequst
     {
