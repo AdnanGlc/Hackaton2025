@@ -54,34 +54,7 @@ const Home = () => {
 
     return (
         <div className="bg-gray-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-md w-full max-w-md p-4 h-screen-100vh">
-                {/* Navbar */}
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                        <button
-                            className="p-2 bg-gray-200 rounded-xl text-black font-bold"
-                            onClick={() => setMenuOpen(!menuOpen)}
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div><img className="object-contain h-20" src={logo} alt={"Logo"} /></div>
-                    <button
-                        className="relative p-2 bg-gray-200 rounded-xl"
-                        onClick={() => setLogoutModalOpen(true)}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                        </svg>
-                    </button>
-                </div>
+            <div className="bg-white rounded-lg w-full max-w-md p-4 h-screen-100vh">
 
                 {/* Greeting */}
                 <h1 className="text-lg font-semibold mb-4">Hey {userData.userName}, Good Morning!</h1>

@@ -194,7 +194,7 @@ const Products = () => {
   
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 relative flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gray-50 p-4 relative flex flex-col items-center justify-center z-0">
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md">
           <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg text-center">
