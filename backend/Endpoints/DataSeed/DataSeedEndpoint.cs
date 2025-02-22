@@ -15,8 +15,6 @@ namespace backend.Endpoints.DataSeed
         {
             if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
 
-            var user = new User { Co2ThisMonth = 0, Co2Total = 0, Email = "test", Password = "test", FirstName = "test", LastName = "test", Points = 0 };
-
 
             var product1 = new Product { Co2PerKg = 0.7, Name = "Potato", QuantityKg = 1, Points = 15, Price = 1.2m };
             db.Add(product1);

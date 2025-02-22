@@ -68,7 +68,7 @@ namespace backend.Endpoints.RecipeEndpoints
                             // ako proizvod ne postoji, dodajemo ga
                             r.RecipeProducts.Add(new RecipeProduct
                             {
-                                RecieptId = r.Id,
+                                RecipeId = r.Id,
                                 ProductId = product.ProductId,
                                 QuantityKg = product.QuantityKg
                             });
