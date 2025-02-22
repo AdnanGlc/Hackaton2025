@@ -61,12 +61,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
 // Apply CORS before Authorization middleware
 app.UseCors("AllowLocalhost");  // Apply CORS policy
-
-app.UseAuthorization();
 
 app.MapControllers();
 

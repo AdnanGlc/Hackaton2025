@@ -16,6 +16,7 @@ namespace backend.Endpoints.RecipeEndpoints
         [AllowAnonymous]
         public override async Task HandleAsync(RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
+            
             Recipe? r;
 
             if (request.Id == null || request.Id == 0)

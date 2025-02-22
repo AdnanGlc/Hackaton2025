@@ -17,6 +17,7 @@ public partial class User : IdentityUser
 
     public int TotalGreenProductsBought { get; set; }
 
+
     public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 
     public virtual ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();

@@ -7,6 +7,7 @@ import circles from '../assets/circles2.png'
 import TextLink from "../components/TextLink";
 
 function LoginForm() {
+    const [userName, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
@@ -14,6 +15,7 @@ function LoginForm() {
     const [isLoading, setIsLoading] = useState(false); // Loading state for button
 
     // Handle input changes
+    const handleUsername = (e) => setUsername(e.target.value);
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleRePasswordChange = (e) => setRePassword(e.target.value);
@@ -31,12 +33,12 @@ function LoginForm() {
         setError("");
 
         try {
-            const response = await fetch("https://localhost:7213/register", {
+            const response = await fetch("http://localhost:5000/api/RegisterUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ email, userName, password }),
             });
 
             const data = await response.json();
@@ -66,6 +68,13 @@ function LoginForm() {
                 </div>
             </div>
             <form className="flex flex-col px-6 pt-6 pb-28 mt-[-150px] w-full bg-white h-full" onSubmit={handleSignUp}>
+                <InputField
+                    label="Username"
+                    type="text"
+                    placeholder="Username"
+                    value={userName}
+                    onChange={handleUsername}
+                />
                 <InputField
                     label="Email"
                     type="email"
