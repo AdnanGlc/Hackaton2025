@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp';
 import Onboarding from './pages/Onboarding';
 import RecipeDetail from './pages/RecipeDetail';
 import AddRecipe from './pages/AddRecipe';
+import Products from './pages/Products';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/AddRecipe" element={<AddRecipe />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </Router>
   );
