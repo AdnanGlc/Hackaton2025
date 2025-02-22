@@ -30,7 +30,7 @@ function LoginForm() {
         setIsLoading(true);
         setError("");
         try {
-            const response = await fetch("http://localhost:5000/login?useCookies=true&useSessionCookies=true", {
+            const response = await fetch("http://localhost:5000/api/LoginUser?useCookies=true&useSessionCookies=true", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -45,7 +45,7 @@ function LoginForm() {
             });
 
             console.log(response.ok);
-
+            
             if (response.ok) {
                 // Successful login
                 console.log(response.ok);
