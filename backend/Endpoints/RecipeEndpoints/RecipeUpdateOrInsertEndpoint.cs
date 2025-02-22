@@ -9,12 +9,12 @@ namespace backend.Endpoints.RecipeEndpoints
 {
     public class RecipeUpdateOrInsertEndpoint(ApplicationDb db) : EndpointBaseAsync
         .WithRequest<RecipeUpdateOrInsertRequest>
-        .WithoutResult
+        .WithResult<int>
     {
         private readonly IBlobService blobService = new BlobService("hackaton2025");
         [HttpPost]
         [AllowAnonymous]
-        public override async Task HandleAsync(RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
+        public override async Task<int> HandleAsync(RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
             
             Recipe? r;
@@ -42,6 +42,8 @@ namespace backend.Endpoints.RecipeEndpoints
                 r.Image = await blobService.UploadFileFromStreamAsync(request.Image);
 
             await db.SaveChangesAsync(cancellationToken);
+            
+            return r.Id;
         }
     }
 

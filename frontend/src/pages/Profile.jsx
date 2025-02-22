@@ -41,7 +41,7 @@ const Profile = () => {
   // Fetch user purchases when user ID is available
   useEffect(() => {
     if (!user.id) return; // Only fetch if user ID exists
-  
+
     const fetchUserPurchases = async () => {
       try {
         const response = await fetch(`http://localhost:5000/api/UserGetProducts?request=${user.id}`, {
@@ -51,11 +51,11 @@ const Profile = () => {
           },
           credentials: "include",
         });
-  
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-  
+
         const data = await response.json();
         setUserPurchases(data);
         console.log("User Purchases:", data);
@@ -63,10 +63,10 @@ const Profile = () => {
         console.error("Error fetching user purchases:", error);
       }
     };
-  
+
     fetchUserPurchases();
   }, [user.id]);
-  
+
 
   const profileData = {
     photo: UserIcon,
@@ -87,35 +87,35 @@ const Profile = () => {
     const userId = user.id; // userId should be a string representing GUID
 
     if (!userId || !productId) {
-        console.error("Invalid userId or productId:", userId, productId);
-        return;
+      console.error("Invalid userId or productId:", userId, productId);
+      return;
     }
 
     try {
-        const response = await fetch('http://localhost:5000/api/UserProductRemove', {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include", // If you're using cookies for session management
-            body: JSON.stringify({ userId: userId, productId: productId })
-        });
+      const response = await fetch('http://localhost:5000/api/UserProductRemove', {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include", // If you're using cookies for session management
+        body: JSON.stringify({ userId: userId, productId: productId })
+      });
 
-        if (response.ok) {
-            // Successfully removed product, update the UI
-            setUserPurchases(userPurchases.filter((purchase) => purchase.productId !== productId));
-            console.log("Product removed successfully");
-        } else {
-            console.error("Error removing product", response.statusText);
-        }
+      if (response.ok) {
+        // Successfully removed product, update the UI
+        setUserPurchases(userPurchases.filter((purchase) => purchase.productId !== productId));
+        console.log("Product removed successfully");
+      } else {
+        console.error("Error removing product", response.statusText);
+      }
     } catch (error) {
-        console.error("Error removing product:", error);
+      console.error("Error removing product:", error);
     }
-};
+  };
 
 
-  
-  
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -137,7 +137,7 @@ const Profile = () => {
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
               <div className={`${getProgressBarColor()} h-2.5 rounded-full`} style={{ width: `${progressPercentage}%` }}></div>
             </div>
-            <p className="text-sm text-gray-600 mt-1">{profileData.progress} / 400</p>
+            <p className="text-sm text-gray-600 mt-1">{profileData.progress.toFixed(2)} / 400</p>
           </div>
         </div>
 
@@ -145,36 +145,36 @@ const Profile = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold mb-4">Available Products</h2>
           <div className="space-y-4">
-          {userPurchases.length > 0 ? (
-  userPurchases.map((purchase) => (
-    <div
-      key={purchase.productId} // Use productId directly
-      className="flex justify-between items-center p-2 border-b border-gray-200"
-    >
-      <div>
-        <p className="font-medium text-gray-800">{purchase.name}</p>
-        <p className="text-sm text-gray-600">{purchase.co2PerKg} CO2/kg</p>
-        <p className="text-sm text-gray-600">Points Earned: {purchase.points}</p>
-      </div>
-      <p className="text-gray-800 font-bold">{purchase.quantityKg} kg</p>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        onClick={() => handleRemoveProduct(purchase.productId)} // Ensure correct productId
-        className="cursor-pointer text-red-600"
-      >
-        <path
-          d="M19 13H5v-2h14v2z"
-          fill="currentColor"
-        />
-      </svg>
-    </div>
-  ))
-) : (
-  <p className="text-center text-gray-500">No purchases yet.</p>
-)}
+            {userPurchases.length > 0 ? (
+              userPurchases.map((purchase) => (
+                <div
+                  key={purchase.productId} // Use productId directly
+                  className="flex justify-between items-center p-2 border-b border-gray-200"
+                >
+                  <div>
+                    <p className="font-medium text-gray-800">{purchase.name}</p>
+                    <p className="text-sm text-gray-600">{purchase.co2PerKg} CO2/kg</p>
+                    <p className="text-sm text-gray-600">Points Earned: {purchase.points}</p>
+                  </div>
+                  <p className="text-gray-800 font-bold">{purchase.quantityKg} kg</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    onClick={() => handleRemoveProduct(purchase.productId)} // Ensure correct productId
+                    className="cursor-pointer text-red-600"
+                  >
+                    <path
+                      d="M19 13H5v-2h14v2z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No purchases yet.</p>
+            )}
 
           </div>
         </div>

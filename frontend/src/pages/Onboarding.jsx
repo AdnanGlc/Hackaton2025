@@ -24,13 +24,13 @@ const Onboarding = () => {
       setIndex(index + 1);
     } else {
       localStorage.setItem("onboardingCompleted", "true");
-      navigate("/");
+      navigate("/login");
     }
   };
 
   const skipOnboarding = () => {
     localStorage.setItem("onboardingCompleted", "true");
-    navigate("/");
+    navigate("/login");
   };
 
   return (

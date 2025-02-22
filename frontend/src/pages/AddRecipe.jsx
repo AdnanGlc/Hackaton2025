@@ -56,51 +56,74 @@ function AddNewItems() {
             return;
         }
 
-        // Prepare the products array
-        const products = selectedIngredients.map((id) => ({
-            productId: id,
-            quantityKg: 1,
-        }));
-
-        // Create FormData object to send both image and other data
+        // Step 1: Post the Recipe without ingredients
         const formData = new FormData();
         formData.append("Image", photo);
         formData.append("Name", recipeName);
         formData.append("Description", details);
         formData.append("UserId", userId);
-        formData.append("Products", JSON.stringify(products)); // Send as string
 
         try {
-            console.log("selam", formData.value);
-            //   const response = await fetch(
-            //     "http://localhost:5000/api/RecipeUpdateOrInsertEndpoint",
-            //     {
-            //       method: "POST", // Using POST to send form data
-            //       form: formData, // Send the formData with all the fields, including the image
-            //     }
-            const response = await fetch(
-                "http://localhost:5000/api/RecipeUpdateOrInsertEndpoint",
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
+            const response = await fetch("http://localhost:5000/api/RecipeUpdateOrInsertEndpoint", {
+                method: "POST",
+                body: formData,
+            });
+
+            console.log(response);
 
             if (response.ok) {
-                alert("Recipe added successfully!");
-                setRecipeName("");
-                setDetails("");
-                setPhoto(null);
-                setPhotoPreview(null);
-                setSelectedIngredients([]);
+                const responseBody = await response.text(); // Read as text first to check if it has any content
+
+                if (responseBody) {
+                    try {
+                        const recipeData = JSON.parse(responseBody); // Parse the JSON content
+
+                        // Step 2: Post the Ingredients
+                        const products = selectedIngredients.map((id) => ({
+                            productId: id,
+                            quantityKg: 1,
+                        }));
+
+                        const ingredientsResponse = await fetch("http://localhost:5000/api/RecipeAddProducts", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            credentials: "include",
+                            body: JSON.stringify({
+                                recipeId: recipeData,
+                                products: products,
+                                quantityKg: 1
+                            }),
+                        });
+
+                        if (ingredientsResponse.ok) {
+                            alert("Recipe and ingredients added successfully!");
+                            setRecipeName("");
+                            setDetails("");
+                            setPhoto(null);
+                            setPhotoPreview(null);
+                            setSelectedIngredients([]);
+                        } else {
+                            alert("Failed to add ingredients.");
+                        }
+                    } catch (jsonError) {
+                        console.error("Error parsing response as JSON:", jsonError);
+                        alert("Failed to parse recipe response.");
+                    }
+                } else {
+                    alert("No content returned from the server.");
+                }
             } else {
                 alert("Failed to add recipe.");
             }
         } catch (error) {
-            console.error("Error adding recipe:", error);
-            alert("Failed to add recipe.");
+            console.error("Error:", error);
+            alert("Failed to add recipe and ingredients.");
         }
     };
+
+
 
     useEffect(() => {
         fetchIngredients();
