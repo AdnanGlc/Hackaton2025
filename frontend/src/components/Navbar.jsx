@@ -45,7 +45,7 @@ const Navbar = () => {
             </div>
 
             {/* Slide-in Menu */}
-            <div className={`fixed inset-0 z-30 bg-gray-800 bg-opacity-50 transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setMenuOpen(false)} />
+            <div className={`fixed inset-0 z-30 bg-gray-800 bg-opacity-20 transition-opacity duration-300 ${menuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} onClick={() => setMenuOpen(false)} />
             <div className={`fixed top-0 left-0 bg-white z-50 h-full w-2/3 md:w-1/2 transition-transform duration-300 transform ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="flex justify-end p-4">
                     <button onClick={() => setMenuOpen(false)}>
@@ -62,10 +62,10 @@ const Navbar = () => {
 
                 {/* Menu Links */}
                 <div className="space-y-4 px-4">
-                    <Link to="/" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Home</Link>
-                    <Link to="/AddRecipe" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Write a Recipe</Link>
-                    <Link to="/products" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Products</Link>
-                    <Link to="/myProfile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">My Profile</Link>
+                    <Link to="/" onClick={() => setMenuOpen(false)} className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Home</Link>
+                    <Link to="/AddRecipe" onClick={() => setMenuOpen(false)} className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Write a Recipe</Link>
+                    <Link to="/products" onClick={() => setMenuOpen(false)} className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">Products</Link>
+                    <Link to="/profile" onClick={() => setMenuOpen(false)} className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">My Profile</Link>
                 </div>
             </div>
 

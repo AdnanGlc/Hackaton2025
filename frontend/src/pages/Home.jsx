@@ -105,7 +105,8 @@ const Home = () => {
                                 /></div>
                                 <div className="p-2">
                                     <h3 className="font-medium">{recipe.name}</h3>
-                                    <p className="text-sm text-gray-600">{recipe.description}</p>
+                                    <p className="text-sm text-gray-600 line-clamp-3">{recipe.description}</p>
+
                                     <div className="flex items-center justify-between text-sm text-gray-700 mt-2">
                                         {/* Rating */}
                                         <span className="flex items-center">

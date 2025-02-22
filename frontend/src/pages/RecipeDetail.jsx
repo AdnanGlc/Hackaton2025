@@ -67,7 +67,7 @@ const BurgerBistro = () => {
                         </div>
 
                         {/* ✅ INGREDIENTS DISPLAY */}
-                        <ul className="list-disc pl-5 mt-2 space-y-2">
+                        <ul className="grid grid-cols-3 mt-2 space-y-2">
                             {recipe.recipeProducts && recipe.recipeProducts.length > 0 ? (
                                 recipe.recipeProducts.map((product, index) => (
                                     <li key={index} className="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
