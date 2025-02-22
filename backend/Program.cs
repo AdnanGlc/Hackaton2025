@@ -1,5 +1,7 @@
 ﻿using backend.Extensions;
 using backend.Models;
+using backend.Services.MonthlyResetService;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +15,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddHangfire(configuration =>
+{
+    configuration.UseSqlServerStorage(builder.Configuration.GetConnectionString("Database"));
+});
+builder.Services.AddHangfireServer();
+
 
 builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDb>()
@@ -60,5 +69,13 @@ app.UseCors("AllowLocalhost");  // Apply CORS policy
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseHangfireDashboard();
+
+// Registracija ponavljajućeg posla
+RecurringJob.AddOrUpdate<MonthlyResetService>(
+    x => x.PerformMonthlyReset(CancellationToken.None),
+    Cron.MinuteInterval(1)
+);
 
 app.Run();
