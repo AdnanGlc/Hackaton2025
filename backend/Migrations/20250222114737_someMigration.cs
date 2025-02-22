@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class someMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,6 +39,7 @@ namespace backend.Migrations
                     Co2Total = table.Column<double>(type: "float", nullable: false),
                     Points = table.Column<int>(type: "int", nullable: false),
                     RFID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalGreenProductsBought = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -225,20 +226,20 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProiductId = table.Column<int>(type: "int", nullable: false),
-                    QuantityKg = table.Column<double>(type: "float", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    QuantityKg = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserProducts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserProducts_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_UserProducts_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalSchema: "identity",
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_UserProducts_Products_ProiductId",
                         column: x => x.ProiductId,
@@ -349,10 +350,10 @@ namespace backend.Migrations
                 column: "ProiductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserProducts_UserId1",
+                name: "IX_UserProducts_UserId",
                 schema: "identity",
                 table: "UserProducts",
-                column: "UserId1");
+                column: "UserId");
         }
 
         /// <inheritdoc />

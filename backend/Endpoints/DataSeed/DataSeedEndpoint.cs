@@ -1,4 +1,4 @@
-﻿using backend.Helpers.API;
+using backend.Helpers.API;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +13,7 @@ namespace backend.Endpoints.DataSeed
         [AllowAnonymous]
         public override async Task HandleAsync(CancellationToken cancellationToken = default)
         {
-            //if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
-
-
+            if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
 
             var product1 = new Product { Co2PerKg = 0.7, Name = "Potato", QuantityKg = 1, Points = 15, Price = 1.2m };
             db.Add(product1);
@@ -86,7 +84,7 @@ namespace backend.Endpoints.DataSeed
                 Name = "Oatmeal with Apple and Banana",
                 Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
                 UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
-                Image= "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
+                Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
 
             };
             db.Recipes.Add(recipe1);
