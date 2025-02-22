@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
 public partial class Product
 {
+    [Key]
     public int Id { get; set; }
 
     public decimal Price { get; set; }
