@@ -184,10 +184,10 @@ const Home = () => {
                     <Link to="/AddRecipe" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         Write a Recipe
                     </Link>
-                    <Link to="/myProfile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
+                    <Link to="/products" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         Products
                     </Link>
-                    <Link to="/myProfile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
+                    <Link to="/profile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         My Profile
                     </Link>
                 </div>
