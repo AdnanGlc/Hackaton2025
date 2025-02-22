@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 
-const dummyUser = {
-  id: 1,
-  name: "Test User",
-  points: 500,
-};
-
 const Products = () => {
   const [cart, setCart] = useState([]);
   const [discountedTotal, setDiscountedTotal] = useState(0);
@@ -14,7 +8,40 @@ const Products = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showBuyPopup, setShowBuyPopup] = useState(false);
   const [products, setProducts] = useState([]); // State for storing products from API
+  const [user, setUser] = useState({ id: null, points: 0 }); // Initial state with id and points
+  const [dummyUser, setDummyUser] = useState({ id: null, points: 0 });
+  useEffect(() => {
+    // Fetch user data from API
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/GetUserData", {
+          method: "GET",
+          credentials: "include", // This ensures cookies are sent with the request
+        });
+    
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+    
+        const data = await response.json();
+    
+        // Extract the userId and points and update the state
+        const updatedUser = {
+          id: data.id, // Assuming `id` in the response is the userId
+          points: data.points || 0,
+          name: data.userName, // Default to 0 if points are not provided
+        };
+        setDummyUser(updatedUser);
+        setUser(updatedUser);
+        console.log(updatedUser);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+    
 
+    fetchUserData();
+  }, []);
   useEffect(() => {
     // Fetch products from the backend
     const fetchProducts = async () => {
@@ -71,27 +98,100 @@ const Products = () => {
     setShowDiscount(true);
   };
 
-  const usePoints = () => {
-    dummyUser.points = 0;
-    setShowBuyPopup(true);
-    confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
-    setTimeout(() => {
-      setShowBuyPopup(false);
-      clearCart();
-    }, 2000);
+  const usePoints = async () => {
+    if (cart.length === 0) return;
+    const totalPoints = cart.reduce((acc, item) => acc + item.points, 0);
+    dummyUser.points=totalPoints;
+    const userId = user.id; // Get userId from the session/cookie or state
+    const receipt = cart.map(item => ({
+      productId: item.id,       // mapping 'id' to 'productId'
+      points: item.points,      // directly using 'points'
+      co2PerKg: item.co2PerKg,  // directly using 'co2PerKg'
+      quantityKg: item.quantityKg  // directly using 'quantityKg'
+    }));
+    console.log(receipt)
+    const requestBody = {
+        userID: userId,
+        receipt: receipt
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/api/UserZeroPoints", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            credentials: 'include' // Send cookies with the request
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update points');
+        }
+
+        const data = await response.json();
+        // Handle success (e.g., update the user points in the state)
+        setShowBuyPopup(true);
+        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+        setTimeout(() => {
+          setShowBuyPopup(false);
+          clearCart();
+        }, 2000);
+        console.log('Points updated:', data);
+    } catch (error) {
+        console.error('Error claiming points:', error);
+    }
+  
   };
 
-  const claimPoints = () => {
+  const claimPoints = async () => {
     if (cart.length === 0) return;
-    const totalPoints = cart.reduce((acc, item) => acc + item.points, 0); // No quantity, just points for selected items
-    dummyUser.points += totalPoints;
-    setShowPopup(true);
-    confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
-    setTimeout(() => {
-      setShowPopup(false);
-      clearCart();
-    }, 2000);
-  };
+    const totalPoints = cart.reduce((acc, item) => acc + item.points, 0);
+    dummyUser.points=totalPoints;
+    const userId = user.id; // Get userId from the session/cookie or state
+    const receipt = cart.map(item => ({
+      productId: item.id,       // mapping 'id' to 'productId'
+      points: item.points,      // directly using 'points'
+      co2PerKg: item.co2PerKg,  // directly using 'co2PerKg'
+      quantityKg: item.quantityKg  // directly using 'quantityKg'
+    }));
+    console.log(receipt)
+    const requestBody = {
+        userID: userId,
+        receipt: receipt
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/api/UserAddPoints", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            credentials: 'include' // Send cookies with the request
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update points');
+        }
+
+        const data = await response.json();
+        // Handle success (e.g., update the user points in the state)
+        console.log('Points updated:', data);
+        setShowPopup(true);
+        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+        setTimeout(() => {
+          setShowPopup(false);
+          clearCart();
+        }, 2000);
+    } catch (error) {
+        console.error('Error claiming points:', error);
+    }
+};
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 relative flex flex-col items-center justify-center">

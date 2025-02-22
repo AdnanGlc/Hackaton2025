@@ -2,26 +2,29 @@
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace backend.Endpoints.UserEndpoints
 {
-    public class UserAddPoints(ApplicationDb db) : EndpointBaseAsync
+    public class UserZeroPoints(ApplicationDb db) : EndpointBaseAsync
         .WithRequest<UserAddPointsRequst>
-        .WithResult<int>//return a number of points user gained 
+        .WithResult<int> // Return the number of points consumed
     {
         [HttpPost]
         public override async Task<int> HandleAsync(UserAddPointsRequst request, CancellationToken cancellationToken = default)
         {
             var user = await db.Users.FirstOrDefaultAsync(u => u.Id == request.UserID, cancellationToken);
-            if (user == null) throw new Exception("No user with requset id");
+            if (user == null) throw new Exception("No user with the given ID");
+
             var totalCo2 = 0.0f;
-            var totalPoints = 0;
-            foreach (ProductAddRequest product in request.Receipt)
+            var totalPointsConsumed = user.Points; // Store the points before resetting
+
+            foreach (var product in request.Receipt)
             {
                 totalCo2 += product.Co2PerKg * product.QuantityKg;
-                totalPoints += Convert.ToInt32(product.Points * product.QuantityKg);
-                var userProduct = await db.UserProducts.FirstOrDefaultAsync(up => up.ProiductId == product.ProductId && up.UserId == request.UserID, cancellationToken);
+
+                var userProduct = await db.UserProducts
+                    .FirstOrDefaultAsync(up => up.ProiductId == product.ProductId && up.UserId == request.UserID, cancellationToken);
+
                 if (userProduct != null)
                     userProduct.QuantityKg += product.QuantityKg;
                 else
@@ -30,27 +33,15 @@ namespace backend.Endpoints.UserEndpoints
                     db.UserProducts.Add(userProduct);
                 }
             }
-            
 
+            // Update CO2 totals but reset points
             user.Co2Total += totalCo2;
             user.Co2ThisMonth += totalCo2;
-            user.Points += totalPoints;
+            user.Points = 0; // Reset points after consumption
+
             await db.SaveChangesAsync();
-            return totalPoints;
+            return totalPointsConsumed;
         }
     }
-    public class ProductAddRequest
-    {
-        public int ProductId { get; set; }
-        public int Points { get; set; }
-        public float Co2PerKg { get; set; }
-        public float QuantityKg { get; set; }
 
-
-    }
-    public class UserAddPointsRequst
-    {
-        public string UserID { get; set; }
-        public List<ProductAddRequest> Receipt { get; set; }
-    }
 }
