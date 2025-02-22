@@ -1,4 +1,4 @@
-# Hackaton 2025 CO₂OK- Alternatika
+# Hackaton 2025 CO₂OK
 
 Naš projekt CO₂OK je aplikacija koja pokušava podići svjest o količini CO₂ koja se proizvodi hranom kroz aktivnosti poput preporuke "čistih" obroka i skupljanja kupona koji služe za ostvaranja popusta u trgovini
 
