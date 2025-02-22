@@ -14,11 +14,12 @@ builder.Services.AddDbContext<ApplicationDb>(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDb>()
                 .AddDefaultTokenProviders()
                 .AddApiEndpoints();
-// Registracija AuthService
+
 
 var app = builder.Build();
 
@@ -32,7 +33,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization(); 
 
 app.MapControllers();
 app.MapIdentityApi<User>();
