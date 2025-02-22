@@ -21,6 +21,7 @@ namespace backend.Endpoints.UserEndpoints
             {
                 totalCo2 += product.Co2PerKg * product.QuantityKg;
                 totalPoints += Convert.ToInt32(product.Points * product.QuantityKg);
+                if (product.Co2PerKg < 0.7) user.TotalGreenProductsBought++;
                 var userProduct = await db.UserProducts.FirstOrDefaultAsync(up => up.ProiductId == product.ProductId && up.UserId == request.UserID, cancellationToken);
                 if (userProduct != null)
                     userProduct.QuantityKg += product.QuantityKg;

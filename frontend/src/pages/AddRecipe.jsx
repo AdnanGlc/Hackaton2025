@@ -154,34 +154,19 @@ function AddNewItems() {
 
             <div className="flex justify-between mt-5 text-sm tracking-wide w-full">
                 <div className="uppercase text-neutral-700">Ingredients</div>
-                <div className="flex gap-1.5 text-zinc-400 cursor-pointer">
-                    <div>See All</div>
-                    <img
-                        loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/c3576bb934964cda99a86429ad19bef0/6ad7ff3c56c14d329873d9363c1bab1e9e1aed82cf120fc41e911e93c5f7eb99"
-                        className="object-contain shrink-0 my-auto w-2"
-                        alt=""
-                    />
-                </div>
             </div>
 
-            <div className="flex gap-3 self-stretch mt-3 overflow-x-auto pb-3 scrollbar-hide">
+            <div className="grid grid-cols-3 gap-2 self-stretch mt-3 overflow-x-auto pb-3 scrollbar-hide">
                 {ingredients.map((ingredient) => (
                     <div
                         key={ingredient.id}
                         onClick={() => handleIngredientSelect(ingredient.id)}
-                        className={`flex flex-col items-center gap-1 cursor-pointer flex-shrink-0 w-[80px] 
+                        className={`flex flex-col items-center gap-1 cursor-pointer flex-shrink-0 
                             ${selectedIngredients.includes(ingredient.id)
                                 ? "bg-orange-100 border border-orange-500 rounded-xl"
                                 : ""}`}
                     >
-                        <div className="bg-white shadow-2xl rounded-full p-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor">
-                                <path d="M19 19.002v1.998a1 1 0 0 1-.883.993H6a1 1 0 0 1-1-1v-1.994a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1z" />
-                                <path d="M12 2a5 5 0 0 1 4.533 2.888 5 5 0 0 1 4.99 3.477 5 5 0 0 1-2.696 5.831V16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-1.433a5 5 0 0 1-2.6-3.001 5 5 0 0 1 5.193-6.27A5 5 0 0 1 12 2z" />
-                            </svg>
-                        </div>
-                        <div className="text-xs text-black">{ingredient.name}</div>
+                        <div className="text-md text-black p-2">{ingredient.name}</div>
                     </div>
                 ))}
             </div>

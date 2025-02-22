@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import CheckboxWithLabel from "../components/CheckboxWithLabel";
 import circles from '../assets/circles2.png';
 import TextLink from "../components/TextLink";
-import Onboarding from "./Onboarding";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [twoFactorCode, setTwoFactorCode] = useState("");
-    const [twoFactorRecoveryCode, setTwoFactorRecoveryCode] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -19,15 +16,21 @@ function LoginForm() {
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
-    const handleTwoFactorCodeChange = (e) => setTwoFactorCode(e.target.value);
-    const handleTwoFactorRecoveryCodeChange = (e) => setTwoFactorRecoveryCode(e.target.value);
     const handleRememberMeChange = () => setRememberMe(!rememberMe);
+
+    // 🔒 Redirect if user is already logged in
+    useEffect(() => {
+        const userData = localStorage.getItem("userData");
+        if (userData) {
+            navigate("/");
+        }
+    }, [navigate]);
 
     const fetchUserData = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/GetUserData', {
                 method: 'GET',
-                credentials: 'include', // 🔑 Include cookies in the request
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -56,9 +59,9 @@ function LoginForm() {
             });
 
             if (response.ok) {
+                await fetchUserData();
                 const isFirstLogin = !localStorage.getItem("onboardingCompleted");
                 navigate(isFirstLogin ? "/onboarding" : "/");
-                await fetchUserData();
             } else {
                 const data = await response.json();
                 setError(data.message || "Invalid login credentials.");

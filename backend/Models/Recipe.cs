@@ -17,6 +17,7 @@ public partial class Recipe
 
     public string Image { get; set; } = null;
 
+    public int Popularity { get; set; }
 
     public virtual ICollection<RecipeProduct> RecipeProducts { get; set; } = new List<RecipeProduct>();
 

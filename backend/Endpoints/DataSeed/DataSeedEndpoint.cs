@@ -2,11 +2,12 @@ using backend.Helpers.API;
 using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Endpoints.DataSeed
 {
     public class DataSeedEndpoint(ApplicationDb db) : EndpointBaseAsync
-        .WithoutRequest
+        .WithRequest
         .WithoutResult
     {
         [HttpPost]
@@ -78,16 +79,23 @@ namespace backend.Endpoints.DataSeed
             db.Users.Add(user);
             await db.SaveChangesAsync();
 
+            //// 1.Zobena kaša s jabukom i bananom
+            //var recipe1 = new Recipe
+            //{
+            //    Name = "Oatmeal with Apple and Banana",
+            //    Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
+            //    UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
+            //    Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
             // 1.Zobena kaša s jabukom i bananom
             var recipe1 = new Recipe
             {
                 Name = "Oatmeal with Apple and Banana",
                 Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
-                UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
+                UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
                 Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
 
-            };
-            db.Recipes.Add(recipe1);
+            //};
+            //db.Recipes.Add(recipe1);
 
             //// 2. Juha od leće i mrkve
             //var recipe2 = new Recipe
@@ -178,7 +186,7 @@ namespace backend.Endpoints.DataSeed
             // };
             // db.Recipes.Add(recipe10);
 
-            await db.SaveChangesAsync(cancellationToken);
+           // await db.SaveChangesAsync(cancellationToken);
         }
     }
 }
