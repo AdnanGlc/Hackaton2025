@@ -35,7 +35,7 @@ namespace backend.Helpers.API
                 );
             }
         }
-        public static class WithoutRequest
+        public static class WithRequest
         {
             public abstract class WithResult<TResponse> : EndpointBase
             {

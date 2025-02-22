@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace backend.Endpoints.ProductEndpoints
 {
     public class ProductGetAllEndpoint(ApplicationDb db) : EndpointBaseAsync
-        .WithoutRequest
+        .WithRequest
         .WithResult<ProductResponse[]>
     {
         [HttpGet]

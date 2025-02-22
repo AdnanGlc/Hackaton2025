@@ -14,7 +14,7 @@ namespace backend.Endpoints.RecipeEndpoints
         private readonly IBlobService blobService = new BlobService("hackaton2025");
         [HttpPost]
         [AllowAnonymous]
-        public override async Task HandleAsync(RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
+        public override async Task HandleAsync([FromForm] RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
             
             Recipe? r;
