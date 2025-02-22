@@ -15,7 +15,7 @@ public partial class User : IdentityUser
     public int Points { get; set; }
     public string? RFID { get; set; }
 
-
+    public int TotalGreenProductsBought { get; set; }
 
     public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();
 

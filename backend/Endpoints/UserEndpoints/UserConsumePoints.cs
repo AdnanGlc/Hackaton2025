@@ -48,7 +48,7 @@ namespace backend.Endpoints.UserEndpoints
     }
     public class UserConsumePointsRequst
     {
-        public int UserID { get;set; }
+        public string UserID { get;set; }
         public List<ProductConsumeRequest> Receipt { get; set; }
     }
 }
