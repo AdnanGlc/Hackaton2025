@@ -14,81 +14,92 @@ namespace backend.Endpoints.DataSeed
         [AllowAnonymous]
         public override async Task HandleAsync(CancellationToken cancellationToken = default)
         {
+
             if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
 
-            var product1 = new Product { Co2PerKg = 0.7, Name = "Potato", QuantityKg = 1, Points = 15, Price = 1.2m };
+            string[] countries = ["bih.webp", "ger.webp", "slo.jpg"];
+            Random rnd = new Random();
+
+            var product1 = new Product { Co2PerKg = 0.7, Name = "Potato", QuantityKg = 1, Points = 15, Price = 1.2m, CountryFlag = countries[rnd.Next(0,2)] };
             db.Add(product1);
-            var product2 = new Product { Co2PerKg = 0.3, Name = "Carrot", QuantityKg = 1, Points = 18, Price = 0.9m };
+            var product2 = new Product { Co2PerKg = 0.3, Name = "Carrot", QuantityKg = 1, Points = 18, Price = 0.9m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product2);
 
-            var product3 = new Product { Co2PerKg = 0.5, Name = "Apple", QuantityKg = 1, Points = 16, Price = 1.5m };
+            var product3 = new Product { Co2PerKg = 0.5, Name = "Apple", QuantityKg = 1, Points = 16, Price = 1.5m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product3);
 
-            var product4 = new Product { Co2PerKg = 0.2, Name = "Onion", QuantityKg = 1, Points = 20, Price = 0.8m };
+            var product4 = new Product { Co2PerKg = 0.2, Name = "Onion", QuantityKg = 1, Points = 20, Price = 0.8m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product4);
 
-            var product5 = new Product { Co2PerKg = 0.8, Name = "Peas", QuantityKg = 1, Points = 14, Price = 2.0m };
+            var product5 = new Product { Co2PerKg = 0.8, Name = "Peas", QuantityKg = 1, Points = 14, Price = 2.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product5);
 
-            var product6 = new Product { Co2PerKg = 0.6, Name = "Lentils", QuantityKg = 1, Points = 15, Price = 1.8m };
+            var product6 = new Product { Co2PerKg = 0.6, Name = "Lentils", QuantityKg = 1, Points = 15, Price = 1.8m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product6);
 
-            var product7 = new Product { Co2PerKg = 0.4, Name = "Zucchini", QuantityKg = 1, Points = 17, Price = 1.3m };
+            var product7 = new Product { Co2PerKg = 0.4, Name = "Zucchini", QuantityKg = 1, Points = 17, Price = 1.3m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product7);
 
-            var product8 = new Product { Co2PerKg = 0.5, Name = "Spinach", QuantityKg = 1, Points = 16, Price = 2.5m };
+            var product8 = new Product { Co2PerKg = 0.5, Name = "Spinach", QuantityKg = 1, Points = 16, Price = 2.5m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product8);
 
-            var product9 = new Product { Co2PerKg = 1.0, Name = "Banana", QuantityKg = 1, Points = 12, Price = 1.6m };
+            var product9 = new Product { Co2PerKg = 1.0, Name = "Banana", QuantityKg = 1, Points = 12, Price = 1.6m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product9);
 
-            var product10 = new Product { Co2PerKg = 0.7, Name = "Wheat Flour", QuantityKg = 1, Points = 14, Price = 1.0m };
+            var product10 = new Product { Co2PerKg = 0.7, Name = "Wheat Flour", QuantityKg = 1, Points = 14, Price = 1.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product10);
 
-            var product11 = new Product { Co2PerKg = 0.3, Name = "Cabbage", QuantityKg = 1, Points = 18, Price = 0.7m };
+            var product11 = new Product { Co2PerKg = 0.3, Name = "Cabbage", QuantityKg = 1, Points = 18, Price = 0.7m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product11);
 
-            var product12 = new Product { Co2PerKg = 25.0, Name = "Beef", QuantityKg = 1, Points = 2, Price = 12.0m };
+            var product12 = new Product { Co2PerKg = 25.0, Name = "Beef", QuantityKg = 1, Points = 2, Price = 12.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product12);
 
-            var product13 = new Product { Co2PerKg = 22.0, Name = "Lamb", QuantityKg = 1, Points = 3, Price = 14.0m };
+            var product13 = new Product { Co2PerKg = 22.0, Name = "Lamb", QuantityKg = 1, Points = 3, Price = 14.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product13);
 
-            var product14 = new Product { Co2PerKg = 10.0, Name = "Cheese", QuantityKg = 1, Points = 5, Price = 8.5m };
+            var product14 = new Product { Co2PerKg = 10.0, Name = "Cheese", QuantityKg = 1, Points = 5, Price = 8.5m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product14);
 
-            var product15 = new Product { Co2PerKg = 3.0, Name = "Rice", QuantityKg = 1, Points = 8, Price = 1.5m };
+            var product15 = new Product { Co2PerKg = 3.0, Name = "Rice", QuantityKg = 1, Points = 8, Price = 1.5m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product15);
 
-            var product16 = new Product { Co2PerKg = 4.0, Name = "Chicken", QuantityKg = 1, Points = 10, Price = 6.0m };
+            var product16 = new Product { Co2PerKg = 4.0, Name = "Chicken", QuantityKg = 1, Points = 10, Price = 6.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product16);
 
-            var product17 = new Product { Co2PerKg = 1.5, Name = "Eggs", QuantityKg = 1, Points = 11, Price = 2.8m };
+            var product17 = new Product { Co2PerKg = 1.5, Name = "Eggs", QuantityKg = 1, Points = 11, Price = 2.8m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product17);
 
-            var product18 = new Product { Co2PerKg = 15.0, Name = "Chocolate", QuantityKg = 1, Points = 4, Price = 3.5m };
+            var product18 = new Product { Co2PerKg = 15.0, Name = "Chocolate", QuantityKg = 1, Points = 4, Price = 3.5m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product18);
 
-            var product19 = new Product { Co2PerKg = 0.9, Name = "Oat Milk", QuantityKg = 1, Points = 13, Price = 2.2m };
+            var product19 = new Product { Co2PerKg = 0.9, Name = "Oat Milk", QuantityKg = 1, Points = 13, Price = 2.2m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product19);
 
-            var product20 = new Product { Co2PerKg = 6.0, Name = "Pork", QuantityKg = 1, Points = 7, Price = 7.0m };
+            var product20 = new Product { Co2PerKg = 6.0, Name = "Lamb", QuantityKg = 1, Points = 7, Price = 7.0m, CountryFlag = countries[rnd.Next(0, 2)] };
             db.Add(product20);
             await db.SaveChangesAsync();
             var user = new User { Email = "johndoe@edu.fit.ba", PasswordHash = "johndoe123" };
             db.Users.Add(user);
             await db.SaveChangesAsync();
 
+            //// 1.Zobena kaša s jabukom i bananom
+            //var recipe1 = new Recipe
+            //{
+            //    Name = "Oatmeal with Apple and Banana",
+            //    Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
+            //    UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
+            //    Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
             // 1.Zobena kaša s jabukom i bananom
-            var recipe1 = new Recipe
-            {
-                Name = "Oatmeal with Apple and Banana",
-                Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
-                UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
-                Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
+            //var recipe1 = new Recipe
+            //{
+            //    Name = "Oatmeal with Apple and Banana",
+            //    Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
+            //    UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
+            //    Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
 
-            };
-            db.Recipes.Add(recipe1);
+            //};
+            //db.Recipes.Add(recipe1);
 
             //// 2. Juha od leće i mrkve
             //var recipe2 = new Recipe
@@ -179,7 +190,7 @@ namespace backend.Endpoints.DataSeed
             // };
             // db.Recipes.Add(recipe10);
 
-            await db.SaveChangesAsync(cancellationToken);
+            // await db.SaveChangesAsync(cancellationToken);
         }
     }
 }

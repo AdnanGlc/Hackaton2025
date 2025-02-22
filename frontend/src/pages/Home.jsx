@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import breakfast from '../assets/breakfast.png';
+import logo from '../assets/Logo.png'
 import lunch from '../assets/lunch.webp';
 import dinner from '../assets/dinner.webp';
+import { useParams } from "react-router-dom";
 
 const categories = [
     { id: 1, name: 'Breakfast', image: breakfast },
@@ -16,6 +18,9 @@ const categories = [
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const navigate = useNavigate();
 
     // Fetch the recipes from the API
     useEffect(() => {
@@ -42,11 +47,16 @@ const Home = () => {
 
     const blobBaseUrl = "https://euniversitystorage.blob.core.windows.net/hackaton2025/";
 
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate("/login");
+    };
+
     return (
         <div className="bg-gray-50 flex items-center justify-center">
             <div className="bg-white rounded-lg shadow-md w-full max-w-md p-4 h-screen-100vh">
                 {/* Navbar */}
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-2">
                         <button
                             className="p-2 bg-gray-200 rounded-xl text-black font-bold"
@@ -56,27 +66,25 @@ const Home = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
                             </svg>
                         </button>
-                        <div className="text-sm text-gray-500">
-                            DELIVER TO
-                            <select className="ml-1 bg-transparent border-none focus:outline-none">
-                                <option>Halal Lab office</option>
-                            </select>
-                        </div>
                     </div>
-                    <Link to="/login">
-                        <button className="relative p-2 bg-gray-200 rounded-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                                <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                                <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                            </svg>
-                        </button>
-                    </Link>
+                    <div><img className="object-contain h-20" src={logo} alt={"Logo"} /></div>
+                    <button
+                        className="relative p-2 bg-gray-200 rounded-xl"
+                        onClick={() => setLogoutModalOpen(true)}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                            className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
+                        </svg>
+                    </button>
                 </div>
 
                 {/* Greeting */}
-                <h1 className="text-lg font-semibold mb-4">Hey Halal, Good Afternoon!</h1>
+                <h1 className="text-lg font-semibold mb-4">Hey {userData.userName}, Good Morning!</h1>
 
                 {/* Search Bar */}
                 <div className="mb-4">
@@ -94,7 +102,7 @@ const Home = () => {
                         <button className="text-orange-500 text-sm">See All &gt;</button>
                     </div>
 
-                    <div className="flex overflow-x-auto space-x-3 scrollbar-hide px-1 pb-7">
+                    <div className="flex overflow-x-auto space-x-3 scrollbar-hide px-1 pb-7 gap-2">
                         {categories.map((category) => (
                             <button
                                 key={category.id}
@@ -114,7 +122,7 @@ const Home = () => {
                         <button className="text-orange-500 text-sm">See All &gt;</button>
                     </div>
 
-                    <div className="space-y-4 flex flex-col gap-2">
+                    <div className="space-y-4 grid grid-cols-2 gap-2">
                         {recipes.map((recipe) => (
                             <Link to={`/RecipeDetail/${recipe.id}`} key={recipe.id} className="space-y-4">
                                 <div className="bg-gray-200 h-32 rounded-lg"><img
@@ -176,7 +184,7 @@ const Home = () => {
                     {/* User Image */}
                     <div className="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4"></div>
                     {/* User Name */}
-                    <h3 className="text-xl font-medium text-gray-800">John Doe</h3>
+                    <h3 className="text-xl font-medium text-gray-800 bg-red">{userData.userName}</h3>
                 </div>
 
                 {/* Menu Sections */}
@@ -184,14 +192,37 @@ const Home = () => {
                     <Link to="/AddRecipe" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         Write a Recipe
                     </Link>
-                    <Link to="/myProfile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
+                    <Link to="/products" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         Products
                     </Link>
-                    <Link to="/myProfile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
+                    <Link to="/profile" className="block p-4 text-gray-800 hover:bg-gray-100 rounded-lg">
                         My Profile
                     </Link>
                 </div>
+
             </div>
+            {logoutModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+                        <h2 className="text-lg font-semibold mb-4">Confirm Logout</h2>
+                        <p className="mb-6 text-gray-600">Are you sure you want to log out?</p>
+                        <div className="flex justify-end space-x-3">
+                            <button
+                                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+                                onClick={() => setLogoutModalOpen(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
     );

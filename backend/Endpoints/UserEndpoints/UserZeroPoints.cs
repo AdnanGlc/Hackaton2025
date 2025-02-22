@@ -2,13 +2,12 @@
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace backend.Endpoints.UserEndpoints
 {
-    public class UserAddPoints(ApplicationDb db) : EndpointBaseAsync
+    public class UserZeroPoints(ApplicationDb db) : EndpointBaseAsync
         .WithRequest<UserAddPointsRequst>
-        .WithResult<int>//return a number of points user gained 
+        .WithResult<int> // Return the number of points consumed
     {
         [HttpPost]
         public override async Task<int> HandleAsync(UserAddPointsRequst request, CancellationToken cancellationToken = default)
@@ -31,27 +30,14 @@ namespace backend.Endpoints.UserEndpoints
                     db.UserProducts.Add(userProduct);
                 }
             }
-            
+
 
             user.Co2Total += totalCo2;
             user.Co2ThisMonth += totalCo2;
-            user.Points += totalPoints;
+            user.Points =0;
             await db.SaveChangesAsync();
             return totalPoints;
         }
     }
-    public class ProductAddRequest
-    {
-        public int ProductId { get; set; }
-        public int Points { get; set; }
-        public float Co2PerKg { get; set; }
-        public float QuantityKg { get; set; }
 
-
-    }
-    public class UserAddPointsRequst
-    {
-        public string UserID { get; set; }
-        public List<ProductAddRequest> Receipt { get; set; }
-    }
 }
