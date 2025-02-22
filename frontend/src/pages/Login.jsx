@@ -3,55 +3,64 @@ import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import CheckboxWithLabel from "../components/CheckboxWithLabel";
-import circles from '../assets/circles2.png'
+import circles from '../assets/circles2.png';
 import TextLink from "../components/TextLink";
+import Onboarding from "./Onboarding";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [twoFactorCode, setTwoFactorCode] = useState("");  // State for the two-factor code
-    const [twoFactorRecoveryCode, setTwoFactorRecoveryCode] = useState("");  // State for recovery code
-    const [rememberMe, setRememberMe] = useState(false);  // State for "Remember me"
-    const [error, setError] = useState("");  // State for errors
-    const [isLoading, setIsLoading] = useState(false);  // State for loading
-    const navigate = useNavigate();  // For redirecting after successful login
+    const [twoFactorCode, setTwoFactorCode] = useState("");
+    const [twoFactorRecoveryCode, setTwoFactorRecoveryCode] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
+    const [error, setError] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-    // Handle input changes
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleTwoFactorCodeChange = (e) => setTwoFactorCode(e.target.value);
     const handleTwoFactorRecoveryCodeChange = (e) => setTwoFactorRecoveryCode(e.target.value);
     const handleRememberMeChange = () => setRememberMe(!rememberMe);
 
-    // Handle form submission
-    const handleLogin = async (e) => {
-        e.preventDefault();
-
-        setIsLoading(true);
-        setError("");
+    const fetchUserData = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/LoginUser?useCookies=true&useSessionCookies=true", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                    twoFactorCode,
-                    twoFactorRecoveryCode,
-                }),
-                credentials: "include",  // Important: this tells the browser to include cookies
+            const response = await fetch('http://localhost:5000/api/GetUserData', {
+                method: 'GET',
+                credentials: 'include', // 🔑 Include cookies in the request
             });
 
-            console.log(response.ok);
-            
+            if (!response.ok) {
+                throw new Error(`Error: ${response.statusText}`);
+            }
+
+            const userData = await response.json();
+            localStorage.setItem('userData', JSON.stringify(userData));
+            console.log('User data saved to localStorage:', userData);
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError("");
+
+        try {
+            const response = await fetch("http://localhost:5000/api/LoginUser", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+                credentials: "include",
+            });
+
             if (response.ok) {
-                // Successful login
-                console.log(response.ok);
-                // Redirect to home or dashboard after login
-                navigate("/");  // Adjust this route to your actual home/dashboard route
+                const isFirstLogin = !localStorage.getItem("onboardingCompleted");
+                navigate(isFirstLogin ? "/onboarding" : "/");
+                await fetchUserData();
             } else {
+                const data = await response.json();
                 setError(data.message || "Invalid login credentials.");
             }
         } catch (err) {
@@ -73,34 +82,8 @@ function LoginForm() {
                 </div>
             </div>
             <form className="flex flex-col px-6 pt-6 pb-28 mt-[-150px] w-full bg-white h-full" onSubmit={handleLogin}>
-                <InputField
-                    label="Email"
-                    type="email"
-                    placeholder="example@gmail.com"
-                    value={email}
-                    onChange={handleEmailChange}
-                />
-                <InputField
-                    label="Password"
-                    type="password"
-                    placeholder="**********"
-                    value={password}
-                    onChange={handlePasswordChange}
-                />
-                <InputField
-                    label="Two-Factor Code"
-                    type="text"
-                    placeholder="Enter 2FA Code"
-                    value={twoFactorCode}
-                    onChange={handleTwoFactorCodeChange}
-                />
-                <InputField
-                    label="Two-Factor Recovery Code"
-                    type="text"
-                    placeholder="Enter Recovery Code"
-                    value={twoFactorRecoveryCode}
-                    onChange={handleTwoFactorRecoveryCodeChange}
-                />
+                <InputField label="Email" type="email" placeholder="example@gmail.com" value={email} onChange={handleEmailChange} />
+                <InputField label="Password" type="password" placeholder="**********" value={password} onChange={handlePasswordChange} />
                 {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
                 <div className="flex gap-10 mt-6 w-full">
                     <CheckboxWithLabel label="Remember me" checked={rememberMe} onChange={handleRememberMeChange} />
@@ -108,12 +91,8 @@ function LoginForm() {
                 </div>
                 <Button text={isLoading ? "Logging In..." : "Log In"} disabled={isLoading} />
                 <div className="flex gap-2.5 self-center mt-10 max-w-full text-center items-end w-[249px]">
-                    <div className="grow text-base text-gray-500">
-                        Don't have an account?
-                    </div>
-                    <Link to="/signup">
-                        <TextLink text="Sign Up" uppercase bold />
-                    </Link>
+                    <div className="grow text-base text-gray-500">Don't have an account?</div>
+                    <Link to="/signup"><TextLink text="Sign Up" uppercase bold /></Link>
                 </div>
             </form>
         </div>
