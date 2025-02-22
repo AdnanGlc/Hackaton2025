@@ -87,12 +87,12 @@ namespace backend.Endpoints.DataSeed
             //    UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
             //    Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
             // 1.Zobena kaša s jabukom i bananom
-            var recipe1 = new Recipe
-            {
-                Name = "Oatmeal with Apple and Banana",
-                Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
-                UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
-                Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
+            //var recipe1 = new Recipe
+            //{
+            //    Name = "Oatmeal with Apple and Banana",
+            //    Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
+            //    UserId = await db.Users.Select(u => u.Id).FirstOrDefaultAsync(cancellationToken),
+            //    Image = "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
 
             //};
             //db.Recipes.Add(recipe1);
@@ -186,7 +186,7 @@ namespace backend.Endpoints.DataSeed
             // };
             // db.Recipes.Add(recipe10);
 
-           // await db.SaveChangesAsync(cancellationToken);
+            // await db.SaveChangesAsync(cancellationToken);
         }
     }
 }

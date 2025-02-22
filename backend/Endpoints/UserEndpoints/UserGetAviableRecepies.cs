@@ -9,7 +9,7 @@ namespace backend.Endpoints.UserEndpoints
         .WithRequest<string>
         .WithResult<AviableReciepesResponse[]>
     {
-        [HttpGet]
+        [HttpGet] 
         public override async Task<AviableReciepesResponse[]> HandleAsync(string request, CancellationToken cancellationToken = default)
         {
             List<AviableReciepesResponse> aviableReciepes = new List<AviableReciepesResponse>();

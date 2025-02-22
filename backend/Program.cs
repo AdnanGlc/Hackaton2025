@@ -56,13 +56,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-   
+    app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
 // Apply CORS before Authorization middleware
 app.UseCors("AllowLocalhost");  // Apply CORS policy
+
+app.UseAuthorization();
 
 app.MapControllers();
 
@@ -71,7 +75,7 @@ app.UseHangfireDashboard();
 // Registracija ponavljajućeg posla
 RecurringJob.AddOrUpdate<MonthlyResetService>(
     x => x.PerformMonthlyReset(CancellationToken.None),
-    Cron.MinuteInterval(1)
+    Cron.Monthly(1,0,0)
 );
 
 app.Run();
