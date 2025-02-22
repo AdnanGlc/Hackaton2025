@@ -14,7 +14,7 @@ namespace backend.Endpoints.RecipeEndpoints
         private readonly IBlobService blobService = new BlobService("hackaton2025");
         [HttpPost]
         [AllowAnonymous]
-        public override async Task HandleAsync([FromForm] RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
+        public override async Task HandleAsync(RecipeUpdateOrInsertRequest request, CancellationToken cancellationToken = default)
         {
             
             Recipe? r;
@@ -41,51 +41,8 @@ namespace backend.Endpoints.RecipeEndpoints
             if (request.Image != null)
                 r.Image = await blobService.UploadFileFromStreamAsync(request.Image);
 
-            if (request.Products != null && request.Products.Any())
-            {
-                var existingProducts = r.RecipeProducts.ToList();
-
-                foreach (var product in request.Products)
-                {
-                    var existingProduct = existingProducts.FirstOrDefault(p => p.ProductId == product.ProductId);
-
-                    if (product.QuantityKg == 0)
-                    {
-                        // ako proizvod postoji i quantity je 0, brisemo ga
-                        if (existingProduct != null)
-                        {
-                            db.RecipeProducts.Remove(existingProduct);
-                        }
-                    }
-                    else
-                    {
-                        if (existingProduct != null)
-                        {
-                            // ako proizvod vec postoji azuriramo kolicinu
-                            existingProduct.QuantityKg = product.QuantityKg;
-                        }
-                        else
-                        {
-                            // ako proizvod ne postoji, dodajemo ga
-                            r.RecipeProducts.Add(new RecipeProduct
-                            {
-                                RecipeId = r.Id,
-                                ProductId = product.ProductId,
-                                QuantityKg = product.QuantityKg
-                            });
-                        }
-                    }
-                }
-            }
-
             await db.SaveChangesAsync(cancellationToken);
         }
-    }
-
-    public class RecipeProductInsertOrUpdateRequest
-    {
-        public int ProductId { get; set; }
-        public float QuantityKg { get; set; }
     }
 
     public class RecipeUpdateOrInsertRequest
@@ -95,6 +52,5 @@ namespace backend.Endpoints.RecipeEndpoints
         public string Description { get; set; }
         public IFormFile? Image { get; set; }
         public string UserId { get; set; }
-        public List<RecipeProductInsertOrUpdateRequest>? Products { get; set; }
     }
 }
