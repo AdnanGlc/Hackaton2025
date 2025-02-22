@@ -38,6 +38,7 @@ namespace backend.Migrations
                     Co2ThisMonth = table.Column<double>(type: "float", nullable: false),
                     Co2Total = table.Column<double>(type: "float", nullable: false),
                     Points = table.Column<int>(type: "int", nullable: false),
+                    RFID = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -203,15 +204,14 @@ namespace backend.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Recipes_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalSchema: "identity",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -228,7 +228,7 @@ namespace backend.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ProiductId = table.Column<int>(type: "int", nullable: false),
                     QuantityKg = table.Column<double>(type: "float", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,8 +238,7 @@ namespace backend.Migrations
                         column: x => x.UserId1,
                         principalSchema: "identity",
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserProducts_Products_ProiductId",
                         column: x => x.ProiductId,
@@ -338,10 +337,10 @@ namespace backend.Migrations
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipes_UserId1",
+                name: "IX_Recipes_UserId",
                 schema: "identity",
                 table: "Recipes",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProducts_ProiductId",

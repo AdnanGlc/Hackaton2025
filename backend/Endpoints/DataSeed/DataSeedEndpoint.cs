@@ -13,9 +13,8 @@ namespace backend.Endpoints.DataSeed
         [AllowAnonymous]
         public override async Task HandleAsync(CancellationToken cancellationToken = default)
         {
-            if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
+            //if (db.Products.Any()) throw new Exception("Data exists, only use data seed on empty database");
 
-            var user = new User { Co2ThisMonth = 0, Co2Total = 0, Email = "test", Password = "test", FirstName = "test", LastName = "test", Points = 0 };
 
 
             var product1 = new Product { Co2PerKg = 0.7, Name = "Potato", QuantityKg = 1, Points = 15, Price = 1.2m };
@@ -76,105 +75,110 @@ namespace backend.Endpoints.DataSeed
 
             var product20 = new Product { Co2PerKg = 6.0, Name = "Pork", QuantityKg = 1, Points = 7, Price = 7.0m };
             db.Add(product20);
+            await db.SaveChangesAsync();
+            var user = new User { Email = "johndoe@edu.fit.ba", PasswordHash = "johndoe123" };
+            db.Users.Add(user);
+            await db.SaveChangesAsync();
 
-            // 1. Zobena kaša s jabukom i bananom
-            //var recipe1 = new Recipe
-            //{
-            //    Name = "Oatmeal with Apple and Banana",
-            //    Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
-            //    UserId = null,
-               
-            //};
-            //db.Recipes.Add(recipe1);
+            // 1.Zobena kaša s jabukom i bananom
+            var recipe1 = new Recipe
+            {
+                Name = "Oatmeal with Apple and Banana",
+                Description = "Warm oatmeal topped with chopped apple and banana, drizzled with oat milk.",
+                UserId = "d70a2b17-b56f-479d-baad-08b8307447c2",
+                Image= "https://www.slikomania.ba/fotky6702/fotos/CWF1930ME1.jpg"
+
+            };
+            db.Recipes.Add(recipe1);
 
             //// 2. Juha od leće i mrkve
             //var recipe2 = new Recipe
             //{
             //    Name = "Lentil and Carrot Soup",
             //    Description = "A hearty soup with lentils, carrots, onions, and potatoes.",
-            //    UserId = null,
-                             
-            //};
-            //db.Recipes.Add(recipe2);
+            //    UserId = 1,
 
-            //// 3. Salata od špinata i graška
-            //var recipe3 = new Recipe
-            //{
-            //    Name = "Spinach and Pea Salad",
-            //    Description = "Fresh salad with young spinach, peas, and a touch of onion.",
-            //    UserId = null,
-                
             //};
-            //db.Recipes.Add(recipe3);
+            // db.Recipes.Add(recipe2);
 
-            //// 4. Tikvice s krumpirom na žaru
-            //var recipe4 = new Recipe
-            //{
-            //    Name = "Grilled Zucchini and Potatoes",
-            //    Description = "Roasted zucchini and potatoes with a sprinkle of spices.",
-            //    UserId = null
-            //};
-            //db.Recipes.Add(recipe4);
+            // // 3. Salata od špinata i graška
+            // var recipe3 = new Recipe
+            // {
+            //     Name = "Spinach and Pea Salad",
+            //     Description = "Fresh salad with young spinach, peas, and a touch of onion.",
+            //     UserId = 1,
 
-            //// 5. Kupus s mrkvom i jabukom
-            //var recipe5 = new Recipe
-            //{
-            //    Name = "Cabbage, Carrot, and Apple Slaw",
-            //    Description = "Fresh slaw with shredded cabbage, carrot, and apple, lemon juice dressing.",
-            //    UserId = null,
-                
-            //};
-            //db.Recipes.Add(recipe5);
+            // };
+            // db.Recipes.Add(recipe3);
 
-            //// 6. Rižoto od graška i špinata
-            //var recipe6 = new Recipe
-            //{
-            //    Name = "Pea and Spinach Risotto",
-            //    Description = "Creamy risotto with peas and spinach, lightly seasoned.",
-            //    UserId = null,
-                
-            //};
-            //db.Recipes.Add(recipe6);
+            // // 4. Tikvice s krumpirom na žaru
+            // var recipe4 = new Recipe
+            // {
+            //     Name = "Grilled Zucchini and Potatoes",
+            //     Description = "Roasted zucchini and potatoes with a sprinkle of spices.",
+            //     UserId = 1
+            // };
+            // db.Recipes.Add(recipe4);
 
-            //// 7. Tjestenina s lećom
-            //var recipe7 = new Recipe
-            //{
-            //    Name = "Pasta with Lentils",
-            //    Description = "Pasta with a lentil sauce and sautéed onions.",
-            //    UserId = null,
-                 
-            //};
-            //db.Recipes.Add(recipe7);
+            // // 5. Kupus s mrkvom i jabukom
+            // var recipe5 = new Recipe
+            // {
+            //     Name = "Cabbage, Carrot, and Apple Slaw",
+            //     Description = "Fresh slaw with shredded cabbage, carrot, and apple, lemon juice dressing.",
+            //     UserId = 1,
 
-            //// 8. Omlet s povrćem
-            //var recipe8 = new Recipe
-            //{
-            //    Name = "Vegetable Omelette",
-            //    Description = "Light omelette with zucchini and spinach.",
-            //    UserId = null,
-                
-            //};
-            //db.Recipes.Add(recipe8);
+            // };
+            // db.Recipes.Add(recipe5);
 
-            //// 9. Krumpir s bananom i orasima
-            //var recipe9 = new Recipe
-            //{
-            //    Name = "Potato with Banana and Walnuts",
-            //    Description = "Baked potatoes topped with banana and walnuts for a sweet twist.",
-            //    UserId = null,
-                
-            //};
-            //db.Recipes.Add(recipe9);
+            // // 6. Rižoto od graška i špinata
+            // var recipe6 = new Recipe
+            // {
+            //     Name = "Pea and Spinach Risotto",
+            //     Description = "Creamy risotto with peas and spinach, lightly seasoned.",
+            //     UserId = 1,
 
-            //// 10. Pileća juha s povrćem
-            //var recipe10 = new Recipe
-            //{
-            //    Name = "Chicken Vegetable Soup",
-            //    Description = "Classic chicken soup with carrots, onions, and potatoes.",
-            //    UserId = null,
-                
-            //};
-            //db.Recipes.Add(recipe10);
+            // };
+            // db.Recipes.Add(recipe6);
+
+            // // 7. Tjestenina s lećom
+            // var recipe7 = new Recipe
+            // {
+            //     Name = "Pasta with Lentils",
+            //     Description = "Pasta with a lentil sauce and sautéed onions.",
+            //     UserId = 1,
+
+            // };
+            // db.Recipes.Add(recipe7);
+
+            // // 8. Omlet s povrćem
+            // var recipe8 = new Recipe
+            // {
+            //     Name = "Vegetable Omelette",
+            //     Description = "Light omelette with zucchini and spinach.",
+            //     UserId = 1,
+
+            // };
+            // db.Recipes.Add(recipe8);
+
+            // // 9. Krumpir s bananom i orasima
+            // var recipe9 = new Recipe
+            // {
+            //     Name = "Potato with Banana and Walnuts",
+            //     Description = "Baked potatoes topped with banana and walnuts for a sweet twist.",
+            //     UserId = 1,
+
+            // };
+            // db.Recipes.Add(recipe9);
+
+            // // 10. Pileća juha s povrćem
+            // var recipe10 = new Recipe
+            // {
+            //     Name = "Chicken Vegetable Soup",
+            //     Description = "Classic chicken soup with carrots, onions, and potatoes.",
+            //     UserId = 1,
+
+            // };
+            // db.Recipes.Add(recipe10);
 
             await db.SaveChangesAsync(cancellationToken);
         }

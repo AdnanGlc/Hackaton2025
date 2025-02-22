@@ -68,7 +68,7 @@ namespace backend.Endpoints.RecipeEndpoints
                             // ako proizvod ne postoji, dodajemo ga
                             r.RecipeProducts.Add(new RecipeProduct
                             {
-                                RecieptId = r.Id,
+                                RecipeId = r.Id,
                                 ProductId = product.ProductId,
                                 QuantityKg = product.QuantityKg
                             });
@@ -93,7 +93,7 @@ namespace backend.Endpoints.RecipeEndpoints
         public string Name { get; set; }
         public string Description { get; set; }
         public IFormFile? Image { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public List<RecipeProductInsertOrUpdateRequest>? Products { get; set; }
     }
 }
