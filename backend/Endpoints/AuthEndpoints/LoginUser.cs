@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Endpoints.UserEndpoints
+namespace backend.Endpoints.AuthEndpoints
 {
     [AllowAnonymous]
 

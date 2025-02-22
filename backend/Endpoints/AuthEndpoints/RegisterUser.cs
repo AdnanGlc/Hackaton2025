@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Endpoints.UserEndpoints
+namespace backend.Endpoints.AuthEndpoints
 {
     public class RegisterUser(UserManager<User> userManager, IHttpContextAccessor _httpContext) : EndpointBaseAsync
         .WithRequest<RegisterDTO>
@@ -25,7 +25,7 @@ namespace backend.Endpoints.UserEndpoints
             {
                 UserName = request.UserName,
                 Email = request.Email,
-              
+
             };
 
             // Kreiraj korisnika u Identity bazi

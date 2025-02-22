@@ -57,5 +57,7 @@ namespace backend.Endpoints.UserEndpoints
     {
         public string UserID { get;set; }
         public List<ProductConsumeRequest> Receipt { get; set; }
+
+       
     }
 }
