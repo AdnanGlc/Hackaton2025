@@ -137,7 +137,7 @@ const Profile = () => {
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
               <div className={`${getProgressBarColor()} h-2.5 rounded-full`} style={{ width: `${progressPercentage}%` }}></div>
             </div>
-            <p className="text-sm text-gray-600 mt-1">{profileData.progress.toFixed(2)} / 400</p>
+            <p className="text-sm text-gray-600 mt-1">{profileData.progress} / 400</p>
           </div>
         </div>
 

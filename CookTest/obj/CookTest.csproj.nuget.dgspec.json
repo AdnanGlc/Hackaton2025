@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj": {}
+    "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\backend.csproj": {
+    "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\Elvir Agic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\obj\\",
+        "projectPath": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\abdul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Elvir Agic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\abdul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -42,9 +42,8 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+          "auditMode": "direct"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -53,6 +52,18 @@
             "Azure.Storage.Blobs": {
               "target": "Package",
               "version": "[12.23.0, )"
+            },
+            "Hangfire": {
+              "target": "Package",
+              "version": "[1.8.18, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.8.18, )"
+            },
+            "Hangfire.SqlServer": {
+              "target": "Package",
+              "version": "[1.8.18, )"
             },
             "Microsoft.AspNetCore.Identity": {
               "target": "Package",
@@ -114,24 +125,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj": {
+    "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj",
+        "projectUniqueName": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj",
         "projectName": "CookTest",
-        "projectPath": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj",
-        "packagesPath": "C:\\Users\\Elvir Agic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\CookTest\\obj\\",
+        "projectPath": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\CookTest\\CookTest.csproj",
+        "packagesPath": "C:\\Users\\abdul\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\CookTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Elvir Agic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\abdul\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -146,8 +157,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\backend.csproj": {
-                "projectPath": "C:\\Users\\Elvir Agic\\Documents\\GitHub\\Hackaton2025\\backend\\backend.csproj"
+              "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\backend.csproj": {
+                "projectPath": "C:\\Users\\abdul\\OneDrive\\Dokumenti\\GitHub\\Hackaton2025\\backend\\backend.csproj"
               }
             }
           }
@@ -160,9 +171,8 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+          "auditMode": "direct"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -213,7 +223,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

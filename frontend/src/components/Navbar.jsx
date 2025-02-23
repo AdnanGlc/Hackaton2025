@@ -1,6 +1,7 @@
 // src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import UserIcon from "../assets/UserIcon.png";
 import logo from '../assets/Logo.png';
 
 const Navbar = () => {
@@ -56,7 +57,7 @@ const Navbar = () => {
                 </div>
                 {/* User Info */}
                 <div className="text-center py-8">
-                    <div className="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4" />
+                    <img src={UserIcon} alt="Profile" className="w-20 h-20 rounded-full object-cover mx-auto mb-4" />
                     <h3 className="text-xl font-medium text-gray-800">{userData?.userName}</h3>
                 </div>
 

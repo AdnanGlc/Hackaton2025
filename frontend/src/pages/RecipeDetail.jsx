@@ -24,6 +24,7 @@ const BurgerBistro = () => {
 
                 if (!response.ok) throw new Error("Failed to fetch recipe details.");
                 const data = await response.json();
+                console.log(data)
                 setRecipe(data);
             } catch (error) {
                 setError(error.message);
@@ -67,11 +68,11 @@ const BurgerBistro = () => {
                         </div>
 
                         {/* ✅ INGREDIENTS DISPLAY */}
-                        <ul className="grid grid-cols-3 mt-2 space-y-2">
-                            {recipe.recipeProducts && recipe.recipeProducts.length > 0 ? (
-                                recipe.recipeProducts.map((product, index) => (
-                                    <li key={index} className="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-                                        {product.name}
+                        <ul className="grid grid-cols-2 w-full gap-2 mt-3">
+                            {recipe.products && recipe.products.length > 0 ? (
+                                recipe.products.map((product, index) => (
+                                    <li key={index} className="bg-orange-100 border border-orange-500 rounded-xl flex items-center justify-center p-3">
+                                        <p className="m-0 text-md">{product.name}</p>
                                     </li>
                                 ))
                             ) : (

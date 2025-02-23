@@ -18,13 +18,13 @@ const Products = () => {
           method: "GET",
           credentials: "include", // This ensures cookies are sent with the request
         });
-    
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
-    
+
         const data = await response.json();
-    
+
         // Extract the userId and points and update the state
         const updatedUser = {
           id: data.id, // Assuming `id` in the response is the userId
@@ -38,7 +38,7 @@ const Products = () => {
         console.error("Error fetching user data:", error);
       }
     };
-    
+
 
     fetchUserData();
   }, []);
@@ -101,7 +101,7 @@ const Products = () => {
   const usePoints = async () => {
     if (cart.length === 0) return;
     const totalPoints = cart.reduce((acc, item) => acc + item.points, 0);
-    dummyUser.points=totalPoints;
+    dummyUser.points = totalPoints;
     const userId = user.id; // Get userId from the session/cookie or state
     const receipt = cart.map(item => ({
       productId: item.id,       // mapping 'id' to 'productId'
@@ -111,44 +111,44 @@ const Products = () => {
     }));
     console.log(receipt)
     const requestBody = {
-        userID: userId,
-        receipt: receipt
+      userID: userId,
+      receipt: receipt
     };
 
     try {
-        const response = await fetch("http://localhost:5000/api/UserZeroPoints", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            credentials: 'include' // Send cookies with the request
-        });
+      const response = await fetch("http://localhost:5000/api/UserZeroPoints", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+        credentials: 'include' // Send cookies with the request
+      });
 
-        if (!response.ok) {
-            throw new Error('Failed to update points');
-        }
+      if (!response.ok) {
+        throw new Error('Failed to update points');
+      }
 
-        const data = await response.json();
-        // Handle success (e.g., update the user points in the state)
-        setShowBuyPopup(true);
-        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
-        setTimeout(() => {
-          setShowBuyPopup(false);
-          clearCart();
-        }, 2000);
-        console.log('Points updated:', data);
+      const data = await response.json();
+      // Handle success (e.g., update the user points in the state)
+      setShowBuyPopup(true);
+      confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+      setTimeout(() => {
+        setShowBuyPopup(false);
+        clearCart();
+      }, 2000);
+      console.log('Points updated:', data);
     } catch (error) {
-        console.error('Error claiming points:', error);
+      console.error('Error claiming points:', error);
     }
-  
+
   };
 
   const claimPoints = async () => {
     if (cart.length === 0) return;
     const totalPoints = cart.reduce((acc, item) => acc + item.points, 0);
-    dummyUser.points=totalPoints;
+    dummyUser.points = totalPoints;
     const userId = user.id; // Get userId from the session/cookie or state
     const receipt = cart.map(item => ({
       productId: item.id,       // mapping 'id' to 'productId'
@@ -158,40 +158,40 @@ const Products = () => {
     }));
     console.log(receipt)
     const requestBody = {
-        userID: userId,
-        receipt: receipt
+      userID: userId,
+      receipt: receipt
     };
 
     try {
-        const response = await fetch("http://localhost:5000/api/UserAddPoints", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-            credentials: 'include' // Send cookies with the request
-        });
+      const response = await fetch("http://localhost:5000/api/UserAddPoints", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+        credentials: 'include' // Send cookies with the request
+      });
 
-        if (!response.ok) {
-            throw new Error('Failed to update points');
-        }
+      if (!response.ok) {
+        throw new Error('Failed to update points');
+      }
 
-        const data = await response.json();
-        // Handle success (e.g., update the user points in the state)
-        console.log('Points updated:', data);
-        setShowPopup(true);
-        confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
-        setTimeout(() => {
-          setShowPopup(false);
-          clearCart();
-        }, 2000);
+      const data = await response.json();
+      // Handle success (e.g., update the user points in the state)
+      console.log('Points updated:', data);
+      setShowPopup(true);
+      confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
+      setTimeout(() => {
+        setShowPopup(false);
+        clearCart();
+      }, 2000);
     } catch (error) {
-        console.error('Error claiming points:', error);
+      console.error('Error claiming points:', error);
     }
-};
+  };
 
-  
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 relative flex flex-col items-center justify-center z-0">
@@ -261,9 +261,9 @@ const Products = () => {
             </div>
           )}
           <div className="flex justify-between mt-4 gap-1">
-            <button onClick={checkout} className="bg-blue-500 text-white px-4 py-2 rounded-md w-1/3 h-15">Checkout</button>
-            <button onClick={clearCart} className="bg-red-500 text-white px-4 py-2 rounded-md w-1/3 h-15">Clear Cart</button>
-            <button onClick={claimPoints} disabled={cart.length === 0} className={`px-4 py-2 rounded-md w-1/3 h-15 ${cart.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}>Claim Points</button>
+            <button onClick={checkout} className="bg-blue-500 text-white px-4 py-2 rounded-xl w-1/3 h-15">Checkout</button>
+            <button onClick={clearCart} className="bg-red-500 text-white px-4 py-2 rounded-xl w-1/3 h-15">Clear Cart</button>
+            <button onClick={claimPoints} disabled={cart.length === 0} className={`px-4 py-2 rounded-xl w-1/3 h-15 ${cart.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-500 text-white'}`}>Claim Points</button>
           </div>
         </div>
       </div>

@@ -107,29 +107,6 @@ const Home = () => {
                                     <h3 className="font-medium">{recipe.name}</h3>
                                     <p className="text-sm text-gray-600 line-clamp-3">{recipe.description}</p>
 
-                                    <div className="flex items-center justify-between text-sm text-gray-700 mt-2">
-                                        {/* Rating */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 fill-yellow-500 mr-1" viewBox="0 0 20 20">
-                                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                            </svg>
-                                            {recipe.rating}
-                                        </span>
-                                        {/* Price */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                            {recipe.price}
-                                        </span>
-                                        {/* Time */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            {recipe.time}
-                                        </span>
-                                    </div>
                                 </div>
                             </Link>
                         ))}
