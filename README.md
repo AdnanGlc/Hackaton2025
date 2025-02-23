@@ -1,7 +1,7 @@
 # 🌱 CO₂OK – Aplikacija za ekološki osviještenu prehranu  
 
 CO₂OK je inovativna aplikacija osmišljena kako bi podigla svijest o utjecaju prehrane na emisiju ugljičnog dioksida (CO₂).  
-Kroz preporuke ekološki prihvatljivih obroka i sustav nagrađivanja korisnika, potičemo održive prehrambene navike i smanjenje ugljičnog otiska.  
+Kroz preporuke ekološki prihvatljivih obroka i sistem nagrađivanja korisnika, potičemo održive prehrambene navike i smanjenje ugljičnog otiska.  
 
 ## 🚀 Tehnološka osnova  
 Aplikacija je razvijena koristeći:  
@@ -11,7 +11,7 @@ Aplikacija je razvijena koristeći:
 
 ## 🌍 Ključne funkcionalnosti  
 
-### 🏪 Simulacija trgovine i sustav bodova  
+### 🏪 Simulacija trgovine i sistem bodova  
 Korisnici mogu sudjelovati u simulaciji kupovine, pri čemu skupljaju bodove koje mogu:  
  Sačuvati za kasnije  
  Iskoristiti za ostvarivanje popusta pri kupovini u trgovinama koje podržavaju aplikaciju  
