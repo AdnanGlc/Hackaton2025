@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import UserIcon from "../assets/UserIcon.png";
 
 const Profile = () => {
-  const [user, setUser] = useState({ id: null, points: 0, userName: "", email: "" });
+  const [user, setUser] = useState({
+    id: null,
+    points: 0,
+    userName: "",
+    email: "",
+  });
   const [userPurchases, setUserPurchases] = useState([]);
 
   // Fetch user data
@@ -44,13 +49,16 @@ const Profile = () => {
 
     const fetchUserPurchases = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/UserGetProducts?request=${user.id}`, {
-          method: "GET", // Use GET instead of POST
-          headers: {
-            "Accept": "application/json",
-          },
-          credentials: "include",
-        });
+        const response = await fetch(
+          `http://localhost:5000/api/UserGetProducts?request=${user.id}`,
+          {
+            method: "GET", // Use GET instead of POST
+            headers: {
+              Accept: "application/json",
+            },
+            credentials: "include",
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -66,7 +74,6 @@ const Profile = () => {
 
     fetchUserPurchases();
   }, [user.id]);
-
 
   const profileData = {
     photo: UserIcon,
@@ -92,18 +99,23 @@ const Profile = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/UserProductRemove', {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include", // If you're using cookies for session management
-        body: JSON.stringify({ userId: userId, productId: productId })
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/UserProductRemove",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include", // If you're using cookies for session management
+          body: JSON.stringify({ userId: userId, productId: productId }),
+        }
+      );
 
       if (response.ok) {
         // Successfully removed product, update the UI
-        setUserPurchases(userPurchases.filter((purchase) => purchase.productId !== productId));
+        setUserPurchases(
+          userPurchases.filter((purchase) => purchase.productId !== productId)
+        );
         console.log("Product removed successfully");
       } else {
         console.error("Error removing product", response.statusText);
@@ -113,17 +125,19 @@ const Profile = () => {
     }
   };
 
-
-
-
-
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-2xl mx-auto">
         {/* Profile Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center space-x-4">
-            <img src={profileData.photo} alt="Profile" className="w-20 h-20 rounded-full object-cover" />
+            <img
+              src={
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/480px-User_icon_2.svg.png"
+              }
+              alt="Profile"
+              className="w-20 h-20 rounded-full object-cover"
+            />
             <div>
               <h1 className="text-2xl font-bold">{profileData.username}</h1>
               <p className="text-gray-600">{profileData.email}</p>
@@ -133,11 +147,18 @@ const Profile = () => {
 
           {/* Progress Bar */}
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Progress</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Progress
+            </label>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-              <div className={`${getProgressBarColor()} h-2.5 rounded-full`} style={{ width: `${progressPercentage}%` }}></div>
+              <div
+                className={`${getProgressBarColor()} h-2.5 rounded-full`}
+                style={{ width: `${progressPercentage}%` }}
+              ></div>
             </div>
-            <p className="text-sm text-gray-600 mt-1">{profileData.progress} / 400</p>
+            <p className="text-sm text-gray-600 mt-1">
+              {profileData.progress} / 400
+            </p>
           </div>
         </div>
 
@@ -153,10 +174,16 @@ const Profile = () => {
                 >
                   <div>
                     <p className="font-medium text-gray-800">{purchase.name}</p>
-                    <p className="text-sm text-gray-600">{purchase.co2PerKg} CO2/kg</p>
-                    <p className="text-sm text-gray-600">Points Earned: {purchase.points}</p>
+                    <p className="text-sm text-gray-600">
+                      {purchase.co2PerKg} CO2/kg
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Points Earned: {purchase.points}
+                    </p>
                   </div>
-                  <p className="text-gray-800 font-bold">{purchase.quantityKg} kg</p>
+                  <p className="text-gray-800 font-bold">
+                    {purchase.quantityKg} kg
+                  </p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -165,17 +192,13 @@ const Profile = () => {
                     onClick={() => handleRemoveProduct(purchase.productId)} // Ensure correct productId
                     className="cursor-pointer text-red-600"
                   >
-                    <path
-                      d="M19 13H5v-2h14v2z"
-                      fill="currentColor"
-                    />
+                    <path d="M19 13H5v-2h14v2z" fill="currentColor" />
                   </svg>
                 </div>
               ))
             ) : (
               <p className="text-center text-gray-500">No purchases yet.</p>
             )}
-
           </div>
         </div>
       </div>
