@@ -19,7 +19,7 @@ const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-  const userData = JSON.parse(localStorage.getItem("userData"));
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const navigate = useNavigate();
 
   // Fetch the recipes from the API
@@ -58,7 +58,7 @@ const Home = () => {
       <div className="bg-white rounded-lg w-full max-w-md p-4 h-screen-100vh">
         {/* Greeting */}
         <h1 className="text-lg font-semibold mb-4">
-          Hey {userData.userName}, Good Morning!
+          Hey {userData?.userName || "Guest"}, Good Morning!
         </h1>
 
         {/* Search Bar */}
@@ -163,7 +163,7 @@ const Home = () => {
           <div className="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4"></div>
           {/* User Name */}
           <h3 className="text-xl font-medium text-gray-800 bg-red">
-            {userData.userName}
+            {userData?.userName || "Guest"}
           </h3>
         </div>
 
