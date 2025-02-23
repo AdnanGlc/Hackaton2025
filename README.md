@@ -42,3 +42,9 @@ Korisnici mogu sami kreirati obroke od ekološki prihvatljivih proizvoda, pomaž
 
 🌱 **CO₂OK nije samo aplikacija – to je korak prema održivijem načinu života.** ♻️  
 
+** Napomena **
+link za aplikaciju https://hackaton2025-azhw.vercel.app/
+
+Molimo otvorite preko mobilnog uredjaja ili prilagodite prikaz
+Login podaci email: abi@gmail.com lozinka: mojaSifra1!
+
