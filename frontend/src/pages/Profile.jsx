@@ -1,36 +1,121 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import UserIcon from "../assets/UserIcon.png";
 
 const Profile = () => {
-  // Sample data for the profile (you can replace this with dynamic data from an API)
+  const [user, setUser] = useState({ id: null, points: 0, userName: "", email: "" });
+  const [userPurchases, setUserPurchases] = useState([]);
+
+  // Fetch user data
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/GetUserData", {
+          method: "GET",
+          credentials: "include", // Ensures cookies are sent with the request
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        const updatedUser = {
+          id: data.id,
+          points: data.points || 0,
+          userName: data.userName,
+          email: data.email,
+          progress: data.co2ThisMonth,
+        };
+
+        setUser(updatedUser);
+        console.log(user.progress);
+        console.log("User Data:", updatedUser);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  // Fetch user purchases when user ID is available
+  useEffect(() => {
+    if (!user.id) return; // Only fetch if user ID exists
+
+    const fetchUserPurchases = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/UserGetProducts?request=${user.id}`, {
+          method: "GET", // Use GET instead of POST
+          headers: {
+            "Accept": "application/json",
+          },
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        setUserPurchases(data);
+        console.log("User Purchases:", data);
+      } catch (error) {
+        console.error("Error fetching user purchases:", error);
+      }
+    };
+
+    fetchUserPurchases();
+  }, [user.id]);
+
+
   const profileData = {
     photo: UserIcon,
-    username: "JohnDoe123",
-    email: "john.doe@example.com",
-    points: 850,
-    progress: 200, // Progress now ranges from 0 to 10,000
+    username: user.userName,
+    email: user.email,
+    points: user.points,
+    progress: user.progress,
   };
 
-  // Sample customer purchases with points earned (you can expand this with more data or fetch from an API)
-  const purchases = [
-    { id: 1, product: "Product 1", CO2: "2 CO2/kg", amount: "40 BAM", pointsEarned: 140 },
-    { id: 2, product: "Product 2", CO2: "1.2 CO2/kg", amount: "60 BAM", pointsEarned: 200 },
-    { id: 3, product: "Product 3", CO2: "2.1 CO2/kg", amount: "75 BAM", pointsEarned: 250 },
-  ];
-
-  // Calculate the percentage for the progress bar (0-100%) based on 0-10,000 scale
   const progressPercentage = (profileData.progress / 400) * 100;
 
-  // Determine the progress bar color based on progress percentage
   const getProgressBarColor = () => {
-    if (progressPercentage >= 80) {
-      return 'bg-red-600'; // Red for 80% or higher (close to 10,000)
-    } else if (progressPercentage >= 50) {
-      return 'bg-amber-500'; // Medium orange for 50%–79%
-    } else {
-      return 'bg-amber-400'; // Light orange for 0%–49%
+    if (progressPercentage >= 80) return "bg-red-600";
+    if (progressPercentage >= 50) return "bg-amber-500";
+    return "bg-amber-400";
+  };
+  const handleRemoveProduct = async (productId) => {
+    const userId = user.id; // userId should be a string representing GUID
+
+    if (!userId || !productId) {
+      console.error("Invalid userId or productId:", userId, productId);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/UserProductRemove', {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include", // If you're using cookies for session management
+        body: JSON.stringify({ userId: userId, productId: productId })
+      });
+
+      if (response.ok) {
+        // Successfully removed product, update the UI
+        setUserPurchases(userPurchases.filter((purchase) => purchase.productId !== productId));
+        console.log("Product removed successfully");
+      } else {
+        console.error("Error removing product", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error removing product:", error);
     }
   };
+
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
@@ -38,11 +123,7 @@ const Profile = () => {
         {/* Profile Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center space-x-4">
-            <img
-              src={profileData.photo}
-              alt={`${profileData.username}'s profile`}
-              className="w-20 h-20 rounded-full object-cover"
-            />
+            <img src={profileData.photo} alt="Profile" className="w-20 h-20 rounded-full object-cover" />
             <div>
               <h1 className="text-2xl font-bold">{profileData.username}</h1>
               <p className="text-gray-600">{profileData.email}</p>
@@ -54,10 +135,7 @@ const Profile = () => {
           <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700">Progress</label>
             <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-              <div
-                className={`${getProgressBarColor()} h-2.5 rounded-full`}
-                style={{ width: `${progressPercentage}%` }}
-              ></div>
+              <div className={`${getProgressBarColor()} h-2.5 rounded-full`} style={{ width: `${progressPercentage}%` }}></div>
             </div>
             <p className="text-sm text-gray-600 mt-1">{profileData.progress} / 400</p>
           </div>
@@ -65,22 +143,40 @@ const Profile = () => {
 
         {/* Customer Purchases */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-bold mb-4">Customer Purchases</h2>
+          <h2 className="text-xl font-bold mb-4">Available Products</h2>
           <div className="space-y-4">
-            {purchases.map((purchase) => (
-              <div key={purchase.id} className="flex justify-between items-center p-2 border-b border-gray-200">
-                <div>
-                  <p className="font-medium text-gray-800">{purchase.product}</p>
-                  <p className="text-sm text-gray-600">{purchase.CO2}</p>
-                  <p className="text-sm text-gray-600">Coins Earned: {purchase.pointsEarned}</p>
+            {userPurchases.length > 0 ? (
+              userPurchases.map((purchase) => (
+                <div
+                  key={purchase.productId} // Use productId directly
+                  className="flex justify-between items-center p-2 border-b border-gray-200"
+                >
+                  <div>
+                    <p className="font-medium text-gray-800">{purchase.name}</p>
+                    <p className="text-sm text-gray-600">{purchase.co2PerKg} CO2/kg</p>
+                    <p className="text-sm text-gray-600">Points Earned: {purchase.points}</p>
+                  </div>
+                  <p className="text-gray-800 font-bold">{purchase.quantityKg} kg</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    onClick={() => handleRemoveProduct(purchase.productId)} // Ensure correct productId
+                    className="cursor-pointer text-red-600"
+                  >
+                    <path
+                      d="M19 13H5v-2h14v2z"
+                      fill="currentColor"
+                    />
+                  </svg>
                 </div>
-                <p className="text-gray-800 font-bold">{purchase.amount}</p>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No purchases yet.</p>
+            )}
+
           </div>
-          {purchases.length === 0 && (
-            <p className="text-center text-gray-500">No purchases yet.</p>
-          )}
         </div>
       </div>
     </div>

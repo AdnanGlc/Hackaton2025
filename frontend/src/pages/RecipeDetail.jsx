@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import IngredientList from "../components/Ingredients";
 import Footer from "../components/RecipeFooter";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BurgerBistro = () => {
     const { id } = useParams();
-    console.log(id);
     const [recipe, setRecipe] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     const blobBaseUrl = "https://euniversitystorage.blob.core.windows.net/hackaton2025/";
 
@@ -15,33 +18,39 @@ const BurgerBistro = () => {
             try {
                 const response = await fetch(`http://localhost:5000/api/RecipeGetById?request=${id}`, {
                     method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: { "Content-Type": "application/json" },
                     credentials: "include",
                 });
 
-                if (!response.ok) {
-                    throw new Error("Failed to fetch recipe details.");
-                }
-
+                if (!response.ok) throw new Error("Failed to fetch recipe details.");
                 const data = await response.json();
+                console.log(data)
                 setRecipe(data);
-                console.log(data);
-                setLoading(false);
             } catch (error) {
                 setError(error.message);
+            } finally {
                 setLoading(false);
             }
         };
-
         fetchRecipeDetail();
     }, [id]);
 
     return (
         <div className="flex overflow-hidden flex-col mx-auto w-full bg-white">
-            {recipe ? (
+            {loading ? (
+                <div className="text-center p-10">Loading recipe details...</div>
+            ) : error ? (
+                <div className="text-center p-10 text-red-500">{error}</div>
+            ) : (
                 <>
+                    <button
+                        className="p-2 bg-gray-200 rounded-xl text-black font-bold absolute ml-5 mt-5"
+                        onClick={() => navigate(-1)}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M5 12h14M5 12l6 6M5 12l6-6" />
+                        </svg>
+                    </button>
                     <img
                         loading="lazy"
                         src={`${blobBaseUrl}${recipe.image}`}
@@ -49,37 +58,32 @@ const BurgerBistro = () => {
                         alt={recipe.name}
                     />
                     <div className="flex flex-col items-start px-6 mt-[-20px] w-full rounded-t-4xl bg-white pt-[20px]">
-                        <div className="text-xl font-bold text-gray-900">{recipe.name}</div>
-                        <div className="flex gap-3 mt-2 text-sm text-gray-900">
-                            <img
-                                loading="lazy"
-                                src="https://cdn.builder.io/api/v1/image/assets/c3576bb934964cda99a86429ad19bef0/b0c710f6d792ad6e339de09025c97cf70ed535daabf85a1124162893f313b65e?apiKey=c3576bb934964cda99a86429ad19bef0&"
-                                className="object-contain shrink-0 rounded-full aspect-square w-[22px]"
-                                alt="Rose Garden icon"
-                            />
-                            <div className="my-auto">Rose Garden</div>
+                        <h2 className="text-xl font-bold text-gray-900">{recipe.name}</h2>
+                        <p className="self-stretch mt-5 text-sm leading-6 text-gray-400">
+                            {recipe.description}
+                        </p>
+
+                        <div className="flex justify-between mt-5 text-sm tracking-wide w-full">
+                            <div className="uppercase text-neutral-700 font-semibold">Ingredients</div>
                         </div>
-                        <div className="flex gap-5 justify-between mt-5 w-full text-gray-900 max-w-[264px]">
-                            <div className="flex gap-2.5 text-base font-bold whitespace-nowrap">
-                                <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/c3576bb934964cda99a86429ad19bef0/9ace731e1c12fa8e06757442c0ec178b351d84edd2e19658de142b58525d4f68?apiKey=c3576bb934964cda99a86429ad19bef0&"
-                                    className="object-contain shrink-0 w-5 aspect-square"
-                                    alt="Rating star"
-                                />
-                                <div>4.7</div>
-                            </div>
-                        </div>
-                        <div className="self-stretch mt-5 text-sm leading-6 text-gray-400">{recipe.description}
-                        </div>
-                        <IngredientList />
+
+                        {/* ✅ INGREDIENTS DISPLAY */}
+                        <ul className="grid grid-cols-2 w-full gap-2 mt-3">
+                            {recipe.products && recipe.products.length > 0 ? (
+                                recipe.products.map((product, index) => (
+                                    <li key={index} className="bg-orange-100 border border-orange-500 rounded-xl flex items-center justify-center p-3">
+                                        <p className="m-0 text-md">{product.name}</p>
+                                    </li>
+                                ))
+                            ) : (
+                                <p className="text-gray-500">No ingredients available for this recipe.</p>
+                            )}
+                        </ul>
                     </div>
+
                 </>
-            ) : (
-                <div className="text-center p-10">Loading recipe details...</div>
-            )
-            }
-        </div >
+            )}
+        </div>
     );
 };
 

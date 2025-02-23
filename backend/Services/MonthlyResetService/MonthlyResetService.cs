@@ -28,7 +28,7 @@ namespace backend.Services.MonthlyResetService
 
         public async Task PerformMonthlyReset(CancellationToken cancellationToken)
         {
-            if (DateTime.UtcNow.Day == 23) // ako je prvi u mejsecu
+            if (DateTime.UtcNow.Day == 1) // ako je prvi u mejsecu
             {
                 _logger.LogInformation("Restart Co2 svim korisnicima");
 
@@ -44,7 +44,7 @@ namespace backend.Services.MonthlyResetService
 
                     foreach (var user in users)
                     {
-                        if (user.Co2ThisMonth <= 0 || user.Co2ThisMonth >= 0)
+                        if (user.Co2ThisMonth <= 400)
                         {
                             user.Points += 100;
                             usersWithPoints.Add(user.Email!);

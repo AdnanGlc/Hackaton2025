@@ -21,7 +21,8 @@ namespace backend.Endpoints.UserEndpoints
                     ProductId = up.ProiductId,
                     Co2PerKg = up.Proiduct.Co2PerKg,
                     QuantityKg = up.QuantityKg,
-                    Name = up.Proiduct.Name
+                    Name = up.Proiduct.Name,
+                    Points = up.Proiduct.Points
                 })
                 .ToArrayAsync(cancellationToken);
         }

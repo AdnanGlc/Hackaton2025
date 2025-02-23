@@ -54,34 +54,7 @@ const Home = () => {
 
     return (
         <div className="bg-gray-50 flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-md w-full max-w-md p-4 h-screen-100vh">
-                {/* Navbar */}
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center space-x-2">
-                        <button
-                            className="p-2 bg-gray-200 rounded-xl text-black font-bold"
-                            onClick={() => setMenuOpen(!menuOpen)}
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div><img className="object-contain h-20" src={logo} alt={"Logo"} /></div>
-                    <button
-                        className="relative p-2 bg-gray-200 rounded-xl"
-                        onClick={() => setLogoutModalOpen(true)}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                            className="icon icon-tabler icons-tabler-outline icon-tabler-user-circle">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                            <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
-                            <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855" />
-                        </svg>
-                    </button>
-                </div>
+            <div className="bg-white rounded-lg w-full max-w-md p-4 h-screen-100vh">
 
                 {/* Greeting */}
                 <h1 className="text-lg font-semibold mb-4">Hey {userData.userName}, Good Morning!</h1>
@@ -132,30 +105,8 @@ const Home = () => {
                                 /></div>
                                 <div className="p-2">
                                     <h3 className="font-medium">{recipe.name}</h3>
-                                    <p className="text-sm text-gray-600">{recipe.description}</p>
-                                    <div className="flex items-center justify-between text-sm text-gray-700 mt-2">
-                                        {/* Rating */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 fill-yellow-500 mr-1" viewBox="0 0 20 20">
-                                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                                            </svg>
-                                            {recipe.rating}
-                                        </span>
-                                        {/* Price */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                            {recipe.price}
-                                        </span>
-                                        {/* Time */}
-                                        <span className="flex items-center">
-                                            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            {recipe.time}
-                                        </span>
-                                    </div>
+                                    <p className="text-sm text-gray-600 line-clamp-3">{recipe.description}</p>
+
                                 </div>
                             </Link>
                         ))}

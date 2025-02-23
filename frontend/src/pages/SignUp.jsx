@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import CheckboxWithLabel from "../components/CheckboxWithLabel";
@@ -19,6 +19,7 @@ function LoginForm() {
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
     const handleRePasswordChange = (e) => setRePassword(e.target.value);
+    const navigate = useNavigate();
 
     // Handle form submission
     const handleSignUp = async (e) => {
@@ -46,6 +47,7 @@ function LoginForm() {
             if (response.ok) {
                 // Handle success (e.g., redirect to login or show success message)
                 console.log("Sign up successful:", data);
+                navigate("/login");
             } else {
                 setError(data.message || "An error occurred during sign up.");
             }

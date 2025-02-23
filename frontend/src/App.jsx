@@ -7,19 +7,25 @@ import RecipeDetail from './pages/RecipeDetail';
 import AddRecipe from './pages/AddRecipe';
 import Products from './pages/Products';
 import Profile from "./pages/Profile";
+import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Public routes without Navbar */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/AddRecipe" element={<AddRecipe />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/RecipeDetail/:id" element={<RecipeDetail />} />
+
+        {/* Protected routes with Navbar */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/AddRecipe" element={<AddRecipe />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </Router>
   );

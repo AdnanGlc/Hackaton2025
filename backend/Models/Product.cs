@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models;
 
@@ -19,8 +20,6 @@ public partial class Product
 
     public double QuantityKg { get; set; }
     public string? CountryFlag { get; set; }
-
-    public virtual ICollection<RecipeProduct> RecipeProducts { get; set; } = new List<RecipeProduct>();
-
-    public virtual ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
+    public  ICollection<RecipeProduct> RecipeProducts { get; set; } = new List<RecipeProduct>();
+    public  ICollection<UserProduct> UserProducts { get; set; } = new List<UserProduct>();
 }
