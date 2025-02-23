@@ -58,7 +58,7 @@ const Home = () => {
       <div className="bg-white rounded-lg w-full max-w-md p-4 h-screen-100vh">
         {/* Greeting */}
         <h1 className="text-lg font-semibold mb-4">
-          {user && user.userName ? <p>{user.userName}</p> : <p>Loading...</p>}
+          Hey {userData.userName}, Good Morning!
         </h1>
 
         {/* Search Bar */}
