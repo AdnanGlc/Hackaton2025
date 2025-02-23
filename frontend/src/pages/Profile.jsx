@@ -13,10 +13,13 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/GetUserData", {
-          method: "GET",
-          credentials: "include", // Ensures cookies are sent with the request
-        });
+        const response = await fetch(
+          "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/GetUserData",
+          {
+            method: "GET",
+            credentials: "include", // Ensures cookies are sent with the request
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -49,7 +52,7 @@ const Profile = () => {
     const fetchUserPurchases = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/UserGetProducts?request=${user.id}`,
+          `https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/UserGetProducts?request=${user.id}`,
           {
             method: "GET", // Use GET instead of POST
             headers: {
@@ -98,7 +101,7 @@ const Profile = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/UserProductRemove",
+        "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/UserProductRemove",
         {
           method: "DELETE",
           headers: {

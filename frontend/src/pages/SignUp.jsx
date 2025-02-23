@@ -34,13 +34,16 @@ function LoginForm() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/RegisterUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, userName, password }),
-      });
+      const response = await fetch(
+        "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/RegisterUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, userName, password }),
+        }
+      );
 
       const data = await response.json();
 

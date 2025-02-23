@@ -20,7 +20,7 @@ function AddNewItems() {
   const fetchIngredients = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/ProductGetAllEndpoint",
+        "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/ProductGetAllEndpoint",
         {
           method: "GET",
         }
@@ -65,7 +65,7 @@ function AddNewItems() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/RecipeUpdateOrInsertEndpoint",
+        "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/RecipeUpdateOrInsertEndpoint",
         {
           method: "POST",
           body: formData,
@@ -88,7 +88,7 @@ function AddNewItems() {
             }));
 
             const ingredientsResponse = await fetch(
-              "http://localhost:5000/api/RecipeAddProducts",
+              "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/RecipeAddProducts",
               {
                 method: "POST",
                 headers: {
