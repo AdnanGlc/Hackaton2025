@@ -26,7 +26,7 @@ Aplikacija prati količinu emitiranog CO₂ kroz prehrambene navike korisnika i 
  Korisnici putem e-maila dobivaju obavijest o dodatnim nagradama na temelju svojih ekoloških izbora  
  ![readME](https://github.com/user-attachments/assets/8262790b-0ad5-43c3-b379-76a846ae88e2)
 
-## 🏆 Sustav bodova i medalja  
+## 🏆 Sistem bodova i medalja  
 🔹 Korisnici osvajaju bodove na temelju količine kupljenih proizvoda s emisijom manjom od **0.7 CO₂/kg**  
 🔹 Sakupljanjem bodova mogu osvojiti različite medalje koje ih motiviraju na ekološki osviještenu kupovinu  
 
