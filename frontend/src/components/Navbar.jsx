@@ -1,7 +1,6 @@
 // src/components/Navbar.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import UserIcon from "../assets/UserIcon.png";
 import logo from "../assets/Logo.png";
 
 const Navbar = () => {

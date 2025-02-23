@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import UserIcon from "../assets/UserIcon.png";
 
 const Profile = () => {
   const [user, setUser] = useState({
@@ -76,7 +75,6 @@ const Profile = () => {
   }, [user.id]);
 
   const profileData = {
-    photo: UserIcon,
     username: user.userName,
     email: user.email,
     points: user.points,
