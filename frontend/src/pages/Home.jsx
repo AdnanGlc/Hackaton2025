@@ -26,15 +26,18 @@ const Home = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/RecipeGetAll", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // Add Authorization header if needed, like:
-            // "Authorization": `Bearer ${token}`
-          },
-          credentials: "include", // This includes cookies if needed
-        });
+        const response = await fetch(
+          "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/RecipeGetAll",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Add Authorization header if needed, like:
+              // "Authorization": `Bearer ${token}`
+            },
+            credentials: "include", // This includes cookies if needed
+          }
+        );
         const data = await response.json();
         setRecipes(data);
       } catch (error) {

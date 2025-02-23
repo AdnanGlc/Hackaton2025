@@ -28,10 +28,13 @@ function LoginForm() {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/GetUserData", {
-        method: "GET",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "https://iotimages-f9fegmephhc5c8e7.canadacentral-01.azurewebsites.net/api/GetUserData",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
@@ -63,8 +66,7 @@ function LoginForm() {
 
       if (response.ok) {
         await fetchUserData();
-        const isFirstLogin = !localStorage.getItem("onboardingCompleted");
-        navigate(isFirstLogin ? "/onboarding" : "/");
+        navigate("/");
       } else {
         const data = await response.json();
         setError(data.message || "Invalid login credentials.");
