@@ -1,32 +1,45 @@
-# Hackaton 2025 CO₂OK
+# 🌱 CO₂OK – Aplikacija za ekološki osviještenu prehranu  
 
-Naš projekt CO₂OK je aplikacija koja pokušava podići svjest o količini CO₂ koja se proizvodi hranom kroz aktivnosti poput preporuke "čistih" obroka i skupljanja kupona koji služe za ostvaranja popusta u trgovini
+CO₂OK je inovativna aplikacija osmišljena kako bi podigla svijest o utjecaju prehrane na emisiju ugljičnog dioksida (CO₂).  
+Kroz preporuke ekološki prihvatljivih obroka i sustav nagrađivanja korisnika, potičemo održive prehrambene navike i smanjenje ugljičnog otiska.  
 
+## 🚀 Tehnološka osnova  
+Aplikacija je razvijena koristeći:  
+- **Backend**: .NET  
+- **Frontend**: React  
+- **Baza podataka**: SQL Server  
 
-Osnovnu verziju aplikacije smo napravili u .Net (backend) i React (frontend) a za bazu podataka koristili smo SQL Server
+## 🌍 Ključne funkcionalnosti  
 
+### 🏪 Simulacija trgovine i sustav bodova  
+Korisnici mogu sudjelovati u simulaciji kupovine, pri čemu skupljaju bodove koje mogu:  
+ Sačuvati za kasnije  
+ Iskoristiti za ostvarivanje popusta pri kupovini u trgovinama koje podržavaju aplikaciju  
 
-Glavne funkcioinalnosti naše aplikacije bi bile:
+Što više proizvoda korisnik kupi odjednom, to veći popust ostvaruje. Time ih potičemo na rjeđe odlaske u trgovinu, čime smanjuju emisiju CO₂ uzrokovanu transportom.  
 
+### 📊 Praćenje ekološkog otiska  
+Aplikacija prati količinu emitiranog CO₂ kroz prehrambene navike korisnika i prikazuje njihov ukupni utjecaj na okoliš u posljednjih mjesec dana.  
 
-Simulacija trgovine kako bi korisnik dobio bodove
+### 🎁 Mjesečni reset bodova i nagrađivanje korisnika  
+ Svakog prvog dana u mjesecu bodovi se resetiraju  
+ Korisnici putem e-maila dobivaju obavijest o dodatnim nagradama na temelju svojih ekoloških izbora  
 
+## 🏆 Sustav bodova i medalja  
+🔹 Korisnici osvajaju bodove na temelju količine kupljenih proizvoda s emisijom manjom od **0.7 CO₂/kg**  
+🔹 Sakupljanjem bodova mogu osvojiti različite medalje koje ih motiviraju na ekološki osviještenu kupovinu  
 
-Simulacija trgovine na osnovu koje korisnik dobiva bodove koje može skupljati, ili iskoristiti skupljenje poene da ostvare popust na trenutnu trgovinu, također ukoliko kupe više proizvoda odjednom dobiju veći popust (jer nemaju razloga često ići u trgovinu i dalje zagađivati okoliš automobilom)
+## 🍽️ Kreiranje održivih obroka  
+Korisnici mogu sami kreirati obroke od ekološki prihvatljivih proizvoda, pomažući tako u promicanju zdravije i održivije prehrane.  
 
+## 📖 Preporuke recepata  
+ Obroci kreirani od strane korisnika prikazuju se ostalim članovima zajednice  
+ Na temelju kupljenih proizvoda, korisnici mogu lako otkriti recepte koje mogu pripremiti  
+ Time se dodatno potiče korištenje namirnica s manjim ugljičnim otiskom  
 
-Također se korisnicima računa ukupna količina CO₂ u zadnjih mjesec dana. Prvog dana u mjesecu se svim korisnicima restartuju bodovi a putem maila su obavijesteni da li su dobili dodatne bodove
+---  
 
-![image](https://github.com/user-attachments/assets/88337eef-60ad-4543-9e8e-f4d9e8bd503c)
+🌱 **CO₂OK nije samo aplikacija – to je korak prema održivijem načinu života.** ♻️  
 
-Korisnicima se na osnovnu kolicine kupljenih proizvoda koji imaju < 0.7 CO₂/kg dodjeljui bodovi te na osnovnu skupljenih bodova korisnik bobiva medalje
-
-Kreiranje obroka od strane korisnika sa odabranim proizvodima koji su ekološki prihvatljivi  
-
-
-Ostalim korisnmicima se priakzuju obroci te mogu na osnovu kupljenih proizvoda istaknuti recepte koje mogu napraviti
-
-
-
-
+![readME](https://github.com/user-attachments/assets/8262790b-0ad5-43c3-b379-76a846ae88e2)
 
