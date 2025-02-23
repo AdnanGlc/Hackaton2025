@@ -6,7 +6,7 @@ Kroz preporuke ekološki prihvatljivih obroka i sistem nagrađivanja korisnika, 
 ## 🚀 Tehnološka osnova  
 Aplikacija je razvijena koristeći:  
 - **Backend**: .NET  
-- **Frontend**: React  
+- **Frontend**: React (run command "npm i; npm run dev")
 - **Baza podataka**: SQL Server  
 
 ## 🌍 Ključne funkcionalnosti  
@@ -24,6 +24,7 @@ Aplikacija prati količinu emitiranog CO₂ kroz prehrambene navike korisnika i 
 ### 🎁 Mjesečni reset bodova i nagrađivanje korisnika  
  Svakog prvog dana u mjesecu bodovi se resetiraju  
  Korisnici putem e-maila dobivaju obavijest o dodatnim nagradama na temelju svojih ekoloških izbora  
+ ![readME](https://github.com/user-attachments/assets/8262790b-0ad5-43c3-b379-76a846ae88e2)
 
 ## 🏆 Sustav bodova i medalja  
 🔹 Korisnici osvajaju bodove na temelju količine kupljenih proizvoda s emisijom manjom od **0.7 CO₂/kg**  
@@ -40,6 +41,4 @@ Korisnici mogu sami kreirati obroke od ekološki prihvatljivih proizvoda, pomaž
 ---  
 
 🌱 **CO₂OK nije samo aplikacija – to je korak prema održivijem načinu života.** ♻️  
-
-![readME](https://github.com/user-attachments/assets/8262790b-0ad5-43c3-b379-76a846ae88e2)
 
